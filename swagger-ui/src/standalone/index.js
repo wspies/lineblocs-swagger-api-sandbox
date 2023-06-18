@@ -6,7 +6,7 @@ import SafeRenderPlugin from "core/plugins/safe-render"
 // the Standalone preset
 
 export default [
-  TopbarPlugin,
+  //TopbarPlugin,
   ConfigsPlugin,
   () => {
     return {
