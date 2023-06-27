@@ -1,0 +1,65 @@
+
+> swagger-ui@5.0.0 dev
+> webpack serve --config webpack/dev.babel.js
+
+
+WARNING (@babel/preset-env): The `corejs` option only has an effect when the `useBuiltIns` option is not `false`
+
+<i> [webpack-dev-server] Project is running at:
+<i> [webpack-dev-server] Loopback: http://localhost:3200/
+<i> [webpack-dev-server] On Your Network (IPv4): http://155.138.131.82:3200/
+<i> [webpack-dev-server] Content not from webpack is served from '/root/swagger-api-sandbox/swagger-ui/dev-helpers' directory
+<i> [webpack-dev-middleware] wait until bundle finished: /
+assets by path *.js 10.5 MiB
+  asset swagger-ui-bundle.js 8.09 MiB [emitted] (name: swagger-ui-bundle) 1 related asset
+  asset swagger-ui-standalone-preset.js 1.37 MiB [emitted] (name: swagger-ui-standalone-preset) 1 related asset
+  asset swagger-ui.js 499 KiB [emitted] (name: swagger-ui) 1 related asset
+  asset vendors.js 492 KiB [emitted] (name: vendors) 1 related asset
+  asset runtime.js 50.2 KiB [emitted] (name: runtime) 1 related asset
+asset swagger-ui.css 148 KiB [emitted] (name: swagger-ui) 1 related asset
+asset index.html 632 bytes [emitted]
+Entrypoint swagger-ui-bundle 8.14 MiB (6.2 MiB) = runtime.js 50.2 KiB swagger-ui-bundle.js 8.09 MiB 2 auxiliary assets
+Entrypoint swagger-ui-standalone-preset 1.42 MiB (1.31 MiB) = runtime.js 50.2 KiB swagger-ui-standalone-preset.js 1.37 MiB 2 auxiliary assets
+Entrypoint swagger-ui 698 KiB (747 KiB) = runtime.js 50.2 KiB swagger-ui.css 148 KiB swagger-ui.js 499 KiB 3 auxiliary assets
+Entrypoint vendors 542 KiB (523 KiB) = runtime.js 50.2 KiB vendors.js 492 KiB 2 auxiliary assets
+orphan modules 771 KiB (javascript) 15.2 KiB (runtime) [orphan] 287 modules
+runtime modules 33.6 KiB 17 modules
+modules by path ./node_modules/ 4.29 MiB 2063 modules
+modules by path ./src/ 1.07 MiB (javascript) 147 KiB (css/mini-extract) 320 modules
+./swagger-config.yaml 144 bytes [built] [code generated]
+util (ignored) 15 bytes [built] [code generated]
+util (ignored) 15 bytes [built] [code generated]
+./util.inspect (ignored) 15 bytes [built] [code generated]
+webpack 5.87.0 compiled successfully in 19617 ms
+
+> swagger-ui@5.0.0 dev
+> webpack serve --config webpack/dev.babel.js
+
+
+WARNING (@babel/preset-env): The `corejs` option only has an effect when the `useBuiltIns` option is not `false`
+
+<i> [webpack-dev-server] Project is running at:
+<i> [webpack-dev-server] Loopback: http://localhost:3200/
+<i> [webpack-dev-server] On Your Network (IPv4): http://155.138.131.82:3200/
+<i> [webpack-dev-server] Content not from webpack is served from '/root/swagger-api-sandbox/swagger-ui/dev-helpers' directory
+assets by path *.js 10.5 MiB
+  asset swagger-ui-bundle.js 8.09 MiB [emitted] (name: swagger-ui-bundle) 1 related asset
+  asset swagger-ui-standalone-preset.js 1.37 MiB [emitted] (name: swagger-ui-standalone-preset) 1 related asset
+  asset swagger-ui.js 499 KiB [emitted] (name: swagger-ui) 1 related asset
+  asset vendors.js 492 KiB [emitted] (name: vendors) 1 related asset
+  asset runtime.js 50.2 KiB [emitted] (name: runtime) 1 related asset
+asset swagger-ui.css 148 KiB [emitted] (name: swagger-ui) 1 related asset
+asset index.html 632 bytes [emitted]
+Entrypoint swagger-ui-bundle 8.14 MiB (6.2 MiB) = runtime.js 50.2 KiB swagger-ui-bundle.js 8.09 MiB 2 auxiliary assets
+Entrypoint swagger-ui-standalone-preset 1.42 MiB (1.31 MiB) = runtime.js 50.2 KiB swagger-ui-standalone-preset.js 1.37 MiB 2 auxiliary assets
+Entrypoint swagger-ui 698 KiB (747 KiB) = runtime.js 50.2 KiB swagger-ui.css 148 KiB swagger-ui.js 499 KiB 3 auxiliary assets
+Entrypoint vendors 542 KiB (523 KiB) = runtime.js 50.2 KiB vendors.js 492 KiB 2 auxiliary assets
+orphan modules 771 KiB (javascript) 15.2 KiB (runtime) [orphan] 287 modules
+runtime modules 33.6 KiB 17 modules
+modules by path ./node_modules/ 4.29 MiB 2063 modules
+modules by path ./src/ 1.07 MiB (javascript) 147 KiB (css/mini-extract) 320 modules
+./swagger-config.yaml 144 bytes [built] [code generated]
+util (ignored) 15 bytes [built] [code generated]
+util (ignored) 15 bytes [built] [code generated]
+./util.inspect (ignored) 15 bytes [built] [code generated]
+webpack 5.87.0 compiled successfully in 24410 ms

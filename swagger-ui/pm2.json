@@ -1,0 +1,9 @@
+{
+    "apps": [
+        {
+            "name": "lineblocs-api-sandbox",
+            "script": "npm",
+            "args" : "run dev"
+        }
+    ]
+}

@@ -1,3024 +1,2065 @@
-swagger: '2.0'
+openapi: 3.0.3
 info:
-  description: >-
-    Official documentation for Lineblocs web API
-  version: 1.0.6
   title: Lineblocs web API
-  termsOfService: http://swagger.io/terms/
+  description: Official documentation for Lineblocs web API
+  termsOfService: https://lineblocs.com/pages/tos
   contact:
-    email: apiteam@swagger.io
+    url: https://lineblocs.com/contact
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-host: lineblocs.com
-basePath: /api/v1
+  version: 1.0.0
+externalDocs:
+    description: Find out more
+    url: https://lineblocs.com
+servers:
+- url: https://lineblocs.com/api/v1
+- url: http://lineblocs.com/api/v1
+security:
+- bearerAuth: []  
 tags:
-  - name: Lineblocs web API
-    description: All about the APIs
-    externalDocs:
-      description: Find out more
-      url: https://lineblocs.com/api/docs/
-  - name: widgetTemplate
-    description: save widget template
-    externalDocs:
-      description: Find out more
-      url: /widgetTemplate/
-  - name: flow
-    description: create and manage flows
-    externalDocs:
-      description: 
-      url: /flow/
-  - name: did
-    description: create and manage DID numebrs
-    externalDocs:
-      description: 
-      url: /did/
-  - name: port
-    description: create and manage port requests
-    externalDocs:
-      description: 
-      url: /port/
-  - name: extension
-    description: create and manage extensions
-    externalDocs:
-      description: 
-      url: /extension/
-  - name: function
-    description: create and manage macro functions
-    externalDocs:
-      description: 
-      url: /function/
-  - name: byo
-    description: create and manage byo data
-    externalDocs:
-      description: 
-      url: /byo/
-  - name: trunk
-    description: create and manage hosted SIP trunks
-    externalDocs:
-      description: 
-      url: /trunk/
-  - name: phone
-    description: Update and manage physical phones
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: phoneGroup
-    description: Update and manage physical phones
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: phoneGlobalSetting
-    description: Update and manage global settings
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: phoneIndividualSetting
-    description: Update and manage individual settings
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: file
-    description: Update and manage media files
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: fax
-    description: Manage fax resources
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: credit
-    description: Manage user credits
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: card
-    description: Manage user cards
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: workspaceUser
-    description: Manage workspace users
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: workspaceParams
-    description: Manage workspace params
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: workspaceRoutingACL
-    description: Manage workspace ACLs
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: settings
-    description: Manage workspace settings
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-  - name: user
-    description: Operations about user
-    externalDocs:
-      description: Find out more about our store
-      url: http://swagger.io
-schemes:
-  - https
-  - http
+- name: Lineblocs web API
+  description: All about the APIs
+- name: widgetTemplate
+  description: save widget template
+  # externalDocs:
+  #   description: Find out more
+  #   url: /widgetTemplate/
+- name: flow
+  description: create and manage flows
+  # externalDocs:
+  #   description: null
+  #   url: /flow/
+- name: did
+  description: create and manage DID numbers
+  # externalDocs:
+  #   description: null
+  #   url: /did/
+- name: port
+  description: create and manage port requests
+  # externalDocs:
+  #   description: null
+  #   url: /port/
+- name: extension
+  description: create and manage extensions
+  # externalDocs:
+  #   description: null
+  #   url: /extension/
+- name: function
+  description: create and manage macro functions
+  # externalDocs:
+  #   description: null
+  #   url: /function/
+- name: byo
+  description: create and manage byo data
+  # externalDocs:
+  #   description: null
+  #   url: /byo/
+- name: trunk
+  description: create and manage hosted SIP trunks
+  # externalDocs:
+  #   description: null
+  #   url: /trunk/
+- name: phone
+  description: Update and manage physical phones
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: phoneGroup
+  description: Update and manage physical phones
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: phoneGlobalSetting
+  description: Update and manage global settings
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: phoneIndividualSetting
+  description: Update and manage individual settings
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: file
+  description: Update and manage media files
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: fax
+  description: Manage fax resources
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: credit
+  description: Manage user credits
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: card
+  description: Manage user cards
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: workspaceUser
+  description: Manage workspace users
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: workspaceParams
+  description: Manage workspace params
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: workspaceRoutingACL
+  description: Manage workspace ACLs
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: settings
+  description: Manage workspace settings
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: user
+  description: Operations about user
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
 paths:
   /widgetTemplate/list:
     get:
       tags:
-        - widgetTemplate
+      - widgetTemplate
       summary: list available widget templates
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/ApiResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /widgetTemplate/:
     post:
       tags:
-        - widgetTemplate
+      - widgetTemplate
       summary: create a new widget template
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: title
-          in: body
-          description: name of template
-          required: true
-          type: string
-        - name: data
-          in: body
-          description: data for widget template
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/WidgetTemplateData'
+      requestBody:
+        description: data for widget template
+        required: true 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
-
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /flow/list:
     get:
       tags:
-        - flow
+      - flow
       summary: list available flows
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/FlowList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /flow/{flowId}:
     get:
       tags:
-        - flow
+      - flow
       summary: get flow
-      description: ''
-      produces:
-        - application/json
       parameters:
+      - in: path
+        name: flowId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the flow to get
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Flow'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - flow
-      summary: create a new flow
-      description: ''
-      consumes:
-        - application/json
+      - flow
+      summary: update a flow 
       parameters:
-        - name: name
-          in: body
-          description: name of flow
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: flow_json
-          in: body
-          description: JSON data for flow
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/flowData'
+      - in: path
+        name: flowId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the flow to update
+      requestBody:
+          description: data for flow
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - flow
+      - flow
       summary: delete a flow
-      description: ''
-      consumes:
-        - application/json
+      parameters:
+      - in: path
+        name: flowId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the flow to delete
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /flow/:
     post:
       tags:
-        - flow
+      - flow
       summary: create a new flow
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of flow
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: flow_json
-          in: body
-          description: JSON data for flow
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/flowData'
+      requestBody:
+          description: data for flow
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /did/list:
     get:
       tags:
-        - did
+      - did
       summary: list available dids
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
-          description: successful operation
-          schema:
-            $ref: '#/definitions/DIDList'
+          200:
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ItemList'
   /did/availableNumbers:
     get:
       tags:
-        - did
+      - did
       summary: list available dids
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/DIDAvailableList'
   /did/{didId}:
     get:
       tags:
-        - did
+      - did
       summary: get did
-      description: ''
-      produces:
-        - application/json
       parameters:
+      - in: path
+        name: didId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the did to get
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/DID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - did
-      summary: create a new did
-      description: ''
-      consumes:
-        - application/json
+      - did
+      summary: update a did
       parameters:
-        - name: name
-          in: body
-          description: name of did
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: did_json
-          in: body
-          description: JSON data for did
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/didData'
+      - in: path
+        name: didId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the did to update
+      requestBody:
+          description: data for flow
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - did
+      - did
       summary: delete a did
-      description: ''
-      consumes:
-        - application/json
+      parameters:
+      - in: path
+        name: didId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the did to delete
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /did/:
     post:
       tags:
-        - did
+      - did
       summary: create a new did
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of did
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: did_json
-          in: body
-          description: JSON data for did
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/didData'
+      requestBody:
+          description: data for did
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /port/list:
     get:
       tags:
-        - port
+      - port
       summary: list available ports
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/DIDList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /port/{portId}:
     get:
       tags:
-        - port
+      - port
       summary: get port
-      description: ''
-      produces:
-        - application/json
       parameters:
+      - in: path
+        name: portId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the port to get
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/DID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - port
-      summary: create a new port
-      description: ''
-      consumes:
-        - application/json
+      - port
+      summary: update a port 
       parameters:
-        - name: name
-          in: body
-          description: name of port
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: port_json
-          in: body
-          description: JSON data for port
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/portData'
+      - in: path
+        name: portId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the port to update
+      requestBody:
+          description: data for port
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - port
+      - port
       summary: delete a port
-      description: ''
-      consumes:
-        - application/json
+      parameters:
+      - in: path
+        name: portId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the port to delete
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /port/:
     post:
       tags:
-        - port
+      - port
       summary: create a new port
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of port
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: port_json
-          in: body
-          description: JSON data for port
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/portData'
+      requestBody:
+          description: data for port
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
-  /extension/list:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /extenstion/list:
     get:
       tags:
-        - extension
-      summary: list available extensions
-      description: ''
-      produces:
-        - application/json
-      parameters:
+      - extension
+      summary: list available extenstions
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/DIDList'
-  /extension/{extensionId}:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /extention/{extensionId}:
     get:
       tags:
-        - extension
+      - extension
       summary: get extension
-      description: ''
-      produces:
-        - application/json
       parameters:
+      - in: path
+        name: extensionId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the extension to get
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/DID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - extension
-      summary: create a new extension
-      description: ''
-      consumes:
-        - application/json
+      - extension
+      summary: update an extension 
       parameters:
-        - name: name
-          in: body
-          description: name of extension
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: extension_json
-          in: body
-          description: JSON data for extension
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/extensionData'
+      - in: path
+        name: extensionId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the extension to update
+      requestBody:
+          description: data for extenstion
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - extension
-      summary: delete a extension
-      description: ''
-      consumes:
-        - application/json
+      - extension
+      summary: delete an extension
+      parameters:
+      - in: path
+        name: extensionId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the extension to delete
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /extension/{extensionId}/history:
     get:
       tags:
-        - extension
+      - extension
       summary: get extension history
-      description: ''
-      produces:
-        - application/json
       parameters:
+      - in: path
+        name: extensionId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the extension to update
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/ExtensionHistory'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /extension/:
     post:
       tags:
-        - extension
+      - extension
       summary: create a new extension
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of extension
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: extension_json
-          in: body
-          description: JSON data for extension
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/extensionData'
+      requestBody:
+          description: data for extension
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
       responses:
         '200':
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+
+
   /function/list:
     get:
       tags:
-        - function
+      - function
       summary: list available functions
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/FunctionList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /function/{functionId}:
+    parameters:
+      - in: path
+        name: functionId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the function
     get:
       tags:
-        - function
+      - function
       summary: get function
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Function'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - function
+      - function
       summary: create a new function
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of function
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: function_json
-          in: body
-          description: JSON data for function
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/functionData'
+      requestBody:
+        description: JSON data for function
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - function
+      - function
       summary: delete a function
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /function/:
     post:
       tags:
-        - function
+      - function
       summary: create a new function
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of function
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: function_json
-          in: body
-          description: JSON data for function
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/functionData'
+      requestBody:
+        description: JSON data for function
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
-
-
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiNoContentResponse'
   /function/templateData/{templateId}:
+    parameters:
+      - in: path
+        name: templateId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the template
     get:
       tags:
-        - function
+      - function
       summary: get function
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Function'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     post:
       tags:
-        - function
+      - function
       summary: create a new function
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of function
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: function_json
-          in: body
-          description: JSON data for function
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/functionData'
+      requestBody:
+        description: JSON data for function
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /function/templateData/list:
     get:
       tags:
-        - function
+      - function
       summary: get function
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/FunctionTemplateData'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /byo/carrier/list:
     get:
       tags:
-        - byo
+      - byo
       summary: list available carriers
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/FunctionList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
   /byo/carrier/{carrierId}:
+    parameters:
+      - in: path
+        name: carrierId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the carrier
     get:
       tags:
-        - byo
+      - byo
       summary: get carrier
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Function'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - byo
+      - byo
       summary: create a new carrier
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of carrier
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: carrier_json
-          in: body
-          description: JSON data for carrier
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/carrierData'
+      requestBody:
+        description: JSON data for carrier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - byo
+      - byo
       summary: delete a carrier
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /byo/carrier/:
     post:
       tags:
-        - byo
+      - byo
       summary: create a new carrier
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of carrier
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: carrier_json
-          in: body
-          description: JSON data for carrier
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/carrierData'
+      requestBody:
+        description: JSON data for carrier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /byo/did/list:
     get:
       tags:
-        - byo
+      - byo
       summary: list available dids
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/FunctionList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /byo/did/{didId}:
+    parameters:
+      - in: path
+        name: didId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the did
     get:
       tags:
-        - did
+      - did
       summary: get did
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Function'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - byo
+      - byo
       summary: create a new did
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of did
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: did_json
-          in: body
-          description: JSON data for did
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/didData'
+      requestBody:
+        description: JSON data for did
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - byo
+      - byo
       summary: delete a did
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /byo/did/:
     post:
       tags:
-        - byo
+      - byo
       summary: create a new did
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of did
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: did_json
-          in: body
-          description: JSON data for did
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/didData'
+      requestBody:
+        description: JSON data for did
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /trunk/list:
     get:
       tags:
-        - trunk
+      - trunk
       summary: list available trunks
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/TrunkList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /trunk/{trunkId}:
+    parameters:
+      - in: path
+        name: trunkId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the trunk
     get:
       tags:
-        - trunk
+      - trunk
       summary: get trunk
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Trunk'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - trunk
+      - trunk
       summary: create a new trunk
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of trunk
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: trunk_json
-          in: body
-          description: JSON data for trunk
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/trunkData'
+      requestBody:
+        description: JSON data for trunk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - trunk
+      - trunk
       summary: delete a trunk
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /trunk/:
     post:
       tags:
-        - trunk
+      - trunk
       summary: create a new trunk
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of trunk
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: trunk_json
-          in: body
-          description: JSON data for trunk
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/trunkData'
+      requestBody:
+        description: JSON data for trunk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /call/list:
     get:
       tags:
-        - call
+      - call
       summary: list available calls
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/CallList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /call/{callId}:
+    parameters:
+      - in: path
+        name: callId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the call
     get:
       tags:
-        - call
+      - call
       summary: get call
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Call'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+          
   /log/list:
     get:
       tags:
-        - log
+      - log
       summary: list available logs
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/LogList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /log/{logId}:
+    parameters:
+      - in: path
+        name: logId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the log
     get:
       tags:
-        - log
+      - log
       summary: get log
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Log'
-
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
   /recording/list:
     get:
       tags:
-        - recording
+      - recording
       summary: list available recordings
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/RecordingList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /recording/{recordingId}:
+    parameters:
+      - in: path
+        name: recordingId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the recording
     get:
       tags:
-        - recording
+      - recording
       summary: get recording
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Recording'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     delete:
       tags:
-        - recording
+      - recording
       summary: delete a recording
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /recording/tag/:
     post:
       tags:
-        - recording
+      - recording
       summary: create recording tag
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of recording
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
+      requestBody:
+        description: JSON data for tag
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /recording/tag/{tagName}:
+    parameters:
+      - in: path
+        name: tagName  
+        schema:
+          type: string
+        required: true
+        description: name of the tag
     delete:
       tags:
-        - recording
+      - recording
       summary: remove recording tag
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /phone/list:
     get:
       tags:
-        - phone
+      - phone
       summary: list available phones
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/PhoneList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /phone/phoneDefs:
     get:
       tags:
-        - phone
+      - phone
       summary: get phone definition data
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/PhoneList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /phone/{phoneId}:
+    parameters:
+      - in: path
+        name: phoneId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the phone
     get:
       tags:
-        - phone
+      - phone
       summary: get phone
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Phone'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - phone
+      - phone
       summary: create a new phone
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of phone
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: phone_json
-          in: body
-          description: JSON data for phone
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/phoneData'
+      requestBody:
+        description: JSON data for phone
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - phone
+      - phone
       summary: delete a phone
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /phone/:
     post:
       tags:
-        - phone
+      - phone
       summary: create a new phone
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of phone
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: phone_json
-          in: body
-          description: JSON data for phone
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/phoneData'
+      requestBody:
+        description: JSON data for phone
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /phoneGroup/list:
     get:
       tags:
-        - phoneGroup
+      - phoneGroup
       summary: list available phoneGroups
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/PhoneGroupList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /phoneGroup/{phoneGroupId}:
+    parameters:
+      - in: path
+        name: phoneGroupId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the phoneGroup
     get:
       tags:
-        - phoneGroup
+      - phoneGroup
       summary: get phoneGroup
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/PhoneGroup'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - phoneGroup
+      - phoneGroup
       summary: create a new phoneGroup
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of phoneGroup
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: phoneGroup_json
-          in: body
-          description: JSON data for phoneGroup
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/phoneGroupData'
+      requestBody:
+        description: JSON data for phoneGroup
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - phoneGroup
+      - phoneGroup
       summary: delete a phoneGroup
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'      
   /phoneGroup/:
     post:
       tags:
-        - phoneGroup
+      - phoneGroup
       summary: create a new phoneGroup
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of phoneGroup
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: phoneGroup_json
-          in: body
-          description: JSON data for phoneGroup
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/phoneGroupData'
+      requestBody:
+        description: JSON data for phoneGroup
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /phoneGlobalSetting/list:
     get:
       tags:
-        - phoneGlobalSetting
+      - phoneGlobalSetting
       summary: list available phoneGlobalSettings
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/PhoneGlobalSettingList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /phoneGlobalSetting/{phoneGlobalSettingId}:
+    parameters:
+      - in: path
+        name: phoneGlobalSettingId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the phone global setting
     get:
       tags:
-        - phoneGlobalSetting
+      - phoneGlobalSetting
       summary: get phoneGlobalSetting
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/PhoneGlobalSetting'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - phoneGlobalSetting
+      - phoneGlobalSetting
       summary: create a new phoneGlobalSetting
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of phoneGlobalSetting
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: phoneGlobalSetting_json
-          in: body
-          description: JSON data for phoneGlobalSetting
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/phoneGlobalSettingData'
+      requestBody:
+        description: JSON data for phoneGlobalSetting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - phoneGlobalSetting
+      - phoneGlobalSetting
       summary: delete a phoneGlobalSetting
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /phoneGlobalSetting/:
     post:
       tags:
-        - phoneGlobalSetting
+      - phoneGlobalSetting
       summary: create a new phoneGlobalSetting
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of phoneGlobalSetting
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: phoneGlobalSetting_json
-          in: body
-          description: JSON data for phoneGlobalSetting
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/phoneGlobalSettingData'
+      requestBody:
+        description: JSON data for phoneGlobalSetting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /phoneIndividualSetting/list:
     get:
       tags:
-        - phoneIndividualSetting
+      - phoneIndividualSetting
       summary: list available phoneIndividualSettings
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/PhoneIndividualSettingList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /phoneIndividualSetting/{phoneIndividualSettingId}:
+    parameters:
+      - in: path
+        name: phoneIndividualSettingId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the phone individual setting
     get:
       tags:
-        - phoneIndividualSetting
+      - phoneIndividualSetting
       summary: get phoneIndividualSetting
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/PhoneIndividualSetting'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     put:
       tags:
-        - phoneIndividualSetting
+      - phoneIndividualSetting
       summary: create a new phoneIndividualSetting
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of phoneIndividualSetting
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: phoneIndividualSetting_json
-          in: body
-          description: JSON data for phoneIndividualSetting
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/phoneIndividualSettingData'
+      requestBody:
+        description: JSON data for phoneIndividualSetting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
-        - phoneIndividualSetting
+      - phoneIndividualSetting
       summary: delete a phoneIndividualSetting
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /phoneIndividualSetting/:
     post:
       tags:
-        - phoneIndividualSetting
+      - phoneIndividualSetting
       summary: create a new phoneIndividualSetting
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of phoneIndividualSetting
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: phoneIndividualSetting_json
-          in: body
-          description: JSON data for phoneIndividualSetting
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/phoneIndividualSettingData'
+      requestBody:
+        description: JSON data for phoneIndividualSetting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /file/list:
     get:
       tags:
-        - file
+      - file
       summary: list available files
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/FileList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /file/{fileId}:
+    parameters:
+      - in: path
+        name: fileId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the file
     delete:
       tags:
-        - file
+      - file
       summary: delete a file
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /file/upload:
     post:
       tags:
-        - file
+      - file
       summary: create a new file
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of file
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: file_json
-          in: body
-          description: JSON data for file
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/fileData'
+      requestBody:
+        description: JSON data for file
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /file/uploadFromGoogleDrive:
     post:
       tags:
-        - file
+      - file
       summary: create a new file
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of file
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: file_json
-          in: body
-          description: JSON data for file
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/fileData'
+      requestBody:
+        description: JSON data for file
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /file/uploadFromThirdParty:
     post:
       tags:
-        - file
+      - file
       summary: create a new file
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of file
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: file_json
-          in: body
-          description: JSON data for file
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/fileData'
+      requestBody:
+        description: JSON data for file
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /fax/list:
     get:
       tags:
-        - fax
+      - fax
       summary: list available faxs
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/FaxList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /fax/{faxId}:
+    parameters:
+      - in: path
+        name: faxId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the fax
     get:
       tags:
-        - fax
+      - fax
       summary: get fax
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Fax'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
     delete:
       tags:
-        - fax
+      - fax
       summary: delete a fax
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /credit/list:
     get:
       tags:
-        - credit
+      - credit
       summary: list available credits
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/CreditList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /credit/checkoutWithPayPal:
     get:
       tags:
-        - credit
+      - credit
       summary: delete a credit
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /credit/checkoutWithPayPalDone:
     get:
       tags:
-        - credit
+      - credit
       summary: delete a credit
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /credit/checkoutWithPayPalFail:
     get:
       tags:
-        - credit
+      - credit
       summary: delete a credit
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /credit/:
     post:
       tags:
-        - credit
+      - credit
       summary: create a new credit
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of credit
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: credit_json
-          in: body
-          description: JSON data for credit
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/creditData'
+      requestBody:
+        description: JSON data for credit
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /card/list:
     get:
       tags:
-        - card
+      - card
       summary: list available cards
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/CardList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /card/{cardId}:
+    parameters:
+      - in: path
+        name: cardId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the card
     delete:
       tags:
-        - card
+      - card
       summary: delete a card
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /card/:
     post:
       tags:
-        - card
+      - card
       summary: create a new card
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of card
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: card_json
-          in: body
-          description: JSON data for card
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/cardData'
+      requestBody:
+        description: JSON data for card
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /card/{cardId}/setPrimary:
+    parameters:
+      - in: path
+        name: cardId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the card
     post:
       tags:
-        - card
+      - card
       summary: create a new card
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of card
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: card_json
-          in: body
-          description: JSON data for card
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/cardData'
+      requestBody:
+        description: JSON data for card
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /workspaceUser/list:
     get:
       tags:
-        - workspaceUser
+      - workspaceUser
       summary: list available workspaceUsers
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/CardList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /workspaceUser/{userId}:
+    parameters:
+      - in: path
+        name: userId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the user
     delete:
       tags:
-        - workspaceUser
+      - workspaceUser
       summary: delete a workspaceUser
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /workspaceUser/:
     post:
       tags:
-        - workspaceUser
+      - workspaceUser
       summary: create a new workspaceUser
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of workspaceUser
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: workspaceUser_json
-          in: body
-          description: JSON data for workspaceUser
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/workspaceUserData'
+      requestBody:
+        description: JSON data for workspaceUser
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /workspaceUser/{userId}/resendInvite:
+    parameters:
+      - in: path
+        name: userId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the user
     post:
       tags:
-        - workspaceUser
+      - workspaceUser
       summary: resend invitation for workspace
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of workspaceUser
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: workspaceUser_json
-          in: body
-          description: JSON data for workspaceUser
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/workspaceUserData'
+      requestBody:
+        description: JSON data for workspaceUser
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /workspaceParams/list:
     get:
       tags:
-        - workspaceParams
+      - workspaceParams
       summary: list available workspaceParamss
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/WorkspaceParamsList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+
   /workspaceParams/saveParams:
     post:
       tags:
-        - workspaceParams
+      - workspaceParams
       summary: create a new workspaceParams
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of workspaceParams
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: workspaceParams_json
-          in: body
-          description: JSON data for workspaceParams
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/workspaceParamsData'
+      requestBody:
+        description: JSON data for workspaceParams
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /workspaceRoutingACL/list:
     get:
       tags:
-        - workspaceRoutingACL
+      - workspaceRoutingACL
       summary: list available workspaceRoutingACLs
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/WorkspaceRoutingACLList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /workspaceRoutingACL/saveParams:
     post:
       tags:
-        - workspaceRoutingACL
+      - workspaceRoutingACL
       summary: create a new workspaceRoutingACL
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of workspaceRoutingACL
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: workspaceRoutingACL_json
-          in: body
-          description: JSON data for workspaceRoutingACL
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/workspaceRoutingACLData'
+      requestBody:
+        description: JSON data for workspaceRoutingACL
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /setting/verifiedCallerIDs/list:
     get:
       tags:
-        - settings
+      - settings
       summary: list caller ids
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/CardList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /setting/verifiedCallerIDs/{verifiedCallerID}:
+    parameters:
+      - in: path
+        name: verifiedCallerID  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the verified caller
     delete:
       tags:
-        - settings
+      - settings
       summary: delete a setting
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /setting/verifiedCallerID:
     post:
       tags:
-        - settings
+      - settings
       summary: create a new setting
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of setting
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: setting_json
-          in: body
-          description: JSON data for setting
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/settingData'
+      requestBody:
+        description: JSON data for setting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /setting/verifiedCallerID/confirm:
     post:
       tags:
-        - settings
+      - settings
       summary: create a new setting
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of setting
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: setting_json
-          in: body
-          description: JSON data for setting
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/settingData'
+      requestBody:
+        description: JSON data for setting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /setting/blockedNumbers/list:
     get:
       tags:
-        - settings
+      - settings
       summary: list caller ids
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/BlockedNumberList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /setting/blockedNumbers/{blockedNumberId}:
+    parameters:
+    - in: path
+      name: blockedNumberId  
+      schema:
+        type: integer
+      required: true
+      description: Numeric Id of the blocked number
     delete:
       tags:
-        - settings
+      - settings
       summary: delete a setting
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /setting/blockedNumber:
     post:
       tags:
-        - settings
+      - settings
       summary: create a new setting
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of setting
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: setting_json
-          in: body
-          description: JSON data for setting
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/settingData'
+      requestBody:
+        description: JSON data for setting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /setting/ipWhitelist/list:
     get:
       tags:
-        - settings
+      - settings
       summary: list caller ids
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/IpWhitelistList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /setting/ipWhitelist/{ipWhitelistId}:
+    parameters:
+    - in: path
+      name: ipWhitelistId  
+      schema:
+        type: integer
+      required: true
+      description: Numeric Id of the whitelisted ip
     delete:
       tags:
-        - settings
+      - settings
       summary: delete a setting
-      description: ''
-      consumes:
-        - application/json
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
   /setting/ipWhitelist:
     post:
       tags:
-        - settings
+      - settings
       summary: create a new setting
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of setting
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: setting_json
-          in: body
-          description: JSON data for setting
-          required: true
-          schema:
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array
-          #$ref: '#/definitions/settingData'
+      requestBody:
+        description: JSON data for setting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
   /setting/extensionCode/list:
     get:
       tags:
-        - settings
+      - settings
       summary: list caller ids
-      description: ''
-      produces:
-        - application/json
-      parameters:
       responses:
-        '200':
+        200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/IpWhitelistList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
   /setting/extensionCode:
     post:
       tags:
-        - settings
+      - settings
       summary: create a new setting
-      description: ''
-      consumes:
-        - application/json
-      parameters:
-        - name: name
-          in: body
-          description: name of setting
-          required: true
-          type: string
-        - name: description
-          in: body
-          description: 
-          required: true
-          type: string
-        - name: setting_json
-          in: body
-          description: JSON data for setting
-          required: true
-          schema:
+      requestBody:
+        description: JSON data for setting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+components:
+  schemas:
+    ApiNoContentResponse:
+      type: string
+    ItemData:
+        type: object
+        required: 
+          - name
+          - description
+          - json
+        properties:
+          name:
+            type: string
+          description:
+            type: string
+          json:
+            description: JSON data
             type: object
             required:
               - cells
             properties:
               cells:
-                type: array
-          #$ref: '#/definitions/settingData'
-      responses:
-        '200':
-          description: successful operation
-          #schema:
-          #  $ref: '#/definitions/ApiNoContentResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
-
-securityDefinitions:
-  api_key:
-    type: apiKey
-    name: api_key
-    in: header
-  petstore_auth:
-    type: oauth2
-    authorizationUrl: https://petstore.swagger.io/oauth/authorize
-    flow: implicit
-    scopes:
-      read:pets: read your pets
-      write:pets: modify pets in your account
-
-definitions:
-  ApiResponse:
-    type: object
-    properties:
-      data:
+                type: array 
+                items:
+                  type: object
+    ItemList:
         type: array
         items:
-          $ref: '#/definitions/WidgetTemplate'
-      message:
-        type: string
-  ApiNoContentResponse:
-    type: string
-  WidgetTemplate:
-    type: object
-    properties:
-      id:
-        type: integer
-      title:
-        type: string
-      data:
-        type: string
-  WidgetTemplateData:
-    type: object
-    properties:
-      id:
-        type: integer
-      title:
-        type: string
-      data:
-        type: string
-  Flow:
-    type: object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-      description:
-        type: string
-      flow_json:
-        type: string
-  FlowList:
-    type: array
-    items:
-      $ref: '#/definitions/Flow'
-  Category:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      name:
-        type: string
-    xml:
-      name: Category
-  Pet:
-    type: object
-    required:
-      - name
-      - photoUrls
-    properties:
-      id:
-        type: integer
-        format: int64
-      category:
-        $ref: '#/definitions/Category'
-      name:
-        type: string
-        example: doggie
-      photoUrls:
-        type: array
-        xml:
-          wrapped: true
-        items:
-          type: string
-          xml:
-            name: photoUrl
-      tags:
-        type: array
-        xml:
-          wrapped: true
-        items:
-          xml:
-            name: tag
-          $ref: '#/definitions/Tag'
-      status:
-        type: string
-        description: pet status in the store
-        enum:
-          - available
-          - pending
-          - sold
-    xml:
-      name: Pet
-  Tag:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      name:
-        type: string
-    xml:
-      name: Tag
-  Order:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      petId:
-        type: integer
-        format: int64
-      quantity:
-        type: integer
-        format: int32
-      shipDate:
-        type: string
-        format: date-time
-      status:
-        type: string
-        description: Order Status
-        enum:
-          - placed
-          - approved
-          - delivered
-      complete:
-        type: boolean
-    xml:
-      name: Order
-  User:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      username:
-        type: string
-      firstName:
-        type: string
-      lastName:
-        type: string
-      email:
-        type: string
-      password:
-        type: string
-      phone:
-        type: string
-      userStatus:
-        type: integer
-        format: int32
-        description: User Status
-    xml:
-      name: User
-externalDocs:
-  description: Find out more about Swagger
-  url: http://swagger.io
+          $ref: '#/components/schemas/Item'
+    Item:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+          description:
+            type: string
+          json:
+            type: string                  
+  securitySchemes:
+    bearerAuth:      
+      type: http      
+      scheme: bearer      
+      bearerFormat: JWT 
