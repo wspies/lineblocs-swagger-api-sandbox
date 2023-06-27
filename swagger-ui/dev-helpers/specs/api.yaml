@@ -444,11 +444,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiNoContentResponse'
-  /extenstion/list:
+  /extension/list:
     get:
       tags:
       - extension
-      summary: list available extenstions
+      summary: list available extensions
       responses:
         200:
           description: successful operation
@@ -456,7 +456,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ItemList'
-  /extention/{extensionId}:
+  /extension/{extensionId}:
     get:
       tags:
       - extension
@@ -487,7 +487,7 @@ paths:
         required: true
         description: Numeric Id of the extension to update
       requestBody:
-          description: data for extenstion
+          description: data for extension
           required: true 
           content:
             application/json:
