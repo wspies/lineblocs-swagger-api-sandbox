@@ -20,11 +20,13 @@ security:
 tags:
 - name: Lineblocs web API
   description: All about the APIs
+- name: authenticate
+  description: Request a token
 - name: widgetTemplate
   description: save widget template
-  # externalDocs:
-  #   description: Find out more
-  #   url: /widgetTemplate/
+  externalDocs:
+    description: Find out more
+    url: https://docsify.js.org/#/more-pages
 - name: flow
   description: create and manage flows
   # externalDocs:
@@ -126,150 +128,299 @@ tags:
   #   description: Find out more about our store
   #   url: http://swagger.io
 paths:
-  /widgetTemplate/list:
-    get:
-      tags:
-      - widgetTemplate
-      summary: list available widget templates
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemList'
-  /widgetTemplate/:
+  /jwt/authenticate:
     post:
       tags:
-      - widgetTemplate
-      summary: create a new widget template
+      - authenticate
+      summary: Save a flow
+      operationId: authenticate
       requestBody:
-        description: data for widget template
-        required: true 
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/Authenticate'
       responses:
         '200':
-          description: successful operation
+          description: OK
+  /widgetTemplate/list:
+    get:
+      tags:
+        - widgetTemplate
+      summary: List all widget templates
+      operationId: listWidgets
+      parameters:
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: true
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: integer
+          required: false
+      responses:
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WidgetTemplate'
+  /widgetTemplate:
+    post:
+      tags:
+        - widgetTemplate
+      summary: Create a new widget template
+      operationId: saveWidget
+      parameters:
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: integer
+          required: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WidgetTemplateRequest'
+      responses:
+        '204':
+          description: No Content
   /flow/list:
     get:
       tags:
       - flow
       summary: list available flows
+      parameters:
+        - in: query
+          name: all
+          schema:
+            type: boolean
+          required: false
+        - in: query
+          name: category
+          schema:
+            type: string
+          required: false
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: string
+          required: false
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Flow'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /flow/{flowId}:
     get:
       tags:
       - flow
-      summary: get flow
+      summary: Get flow data
       parameters:
-      - in: path
-        name: flowId  
-        schema:
-          type: integer
-        required: true
-        description: Numeric Id of the flow to get
+        - in: path
+          name: flowId
+          schema:
+            type: string
+          required: true
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: string
+          required: false
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/Flow'
     put:
       tags:
       - flow
-      summary: update a flow 
+      summary: Update a flow
       parameters:
-      - in: path
-        name: flowId  
-        schema:
-          type: integer
-        required: true
-        description: Numeric Id of the flow to update
+        - in: path
+          name: flowId
+          schema:
+            type: string
+          required: true
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: string
+          required: false
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
       requestBody:
-          description: data for flow
-          required: true 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemData'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Flow'
       responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '204':
+          description: No Content        
     delete:
       tags:
       - flow
-      summary: delete a flow
+      summary: Delete a flow
       parameters:
-      - in: path
-        name: flowId  
-        schema:
-          type: integer
-        required: true
-        description: Numeric Id of the flow to delete
+        - in: path
+          name: flowId
+          schema:
+            type: string
+          required: true
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: string
+          required: false
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
       responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '204':
+          description: No Content
+        
   /flow/:
     post:
       tags:
       - flow
-      summary: create a new flow
+      summary: Save a flow
+      parameters:
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: string
+          required: false
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
       requestBody:
-          description: data for flow
-          required: true 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemData'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Flow'
       responses:
         '200':
-          description: successful operation
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                $ref: '#/components/schemas/Flow'
+        
   /did/list:
     get:
       tags:
       - did
       summary: list available dids
+      parameters:
+        - name: all
+          in: query
+          schema:
+            type: boolean
+          required: false
       responses:
-          200:
-            description: successful operation
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ItemList'
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DIDNumber'
   /did/availableNumbers:
     get:
       tags:
       - did
       summary: list available dids
+      parameters:
+        - name: country_iso
+          in: query
+          schema:
+            type: string
+          required: false
+        - name: region
+          in: query
+          schema:
+            type: string
+          required: false
+        - name: prefix
+          in: query
+          schema:
+            type: string
+          required: false
+        - name: rate_center
+          in: query
+          schema:
+            type: string
+          required: false
+        - name: number_for
+          in: query
+          schema:
+            type: string
+          required: true
+        - name: number_type
+          in: query
+          schema:
+            type: string
+          required: true
+        - name: vanity_prefix
+          in: query
+          schema:
+            type: string
+          required: true
+        - name: vanity_pattern
+          in: query
+          schema:
+            type: string
+          required: true
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DIDNumber'
+        
   /did/{didId}:
     get:
       tags:
@@ -283,37 +434,30 @@ paths:
         required: true
         description: Numeric Id of the did to get
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/DIDNumber'
     put:
       tags:
       - did
       summary: update a did
       parameters:
-      - in: path
-        name: didId  
-        schema:
-          type: integer
-        required: true
-        description: Numeric Id of the did to update
+        - name: numberId
+          in: path
+          schema:
+            type: integer
+          required: true
       requestBody:
-          description: data for flow
-          required: true 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemData'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DIDNumber'
       responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '204':
+          description: No Content
     delete:
       tags:
       - did
@@ -326,12 +470,8 @@ paths:
         required: true
         description: Numeric Id of the did to delete
       responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '204':
+          description: No Content
   /did/:
     post:
       tags:
@@ -343,233 +483,334 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemData'
+               $ref: '#/components/schemas/DIDNumber'
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                $ref: '#/components/schemas/DIDNumber'
   /port/list:
     get:
       tags:
-      - port
-      summary: list available ports
+        - port
+      summary: List numbers
+      parameters:
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: integer
+          required: false
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PortNumber'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /port/{portId}:
     get:
       tags:
-      - port
-      summary: get port
+        - port
+      summary: Get number data
       parameters:
-      - in: path
-        name: portId  
-        schema:
-          type: integer
-        required: true
-        description: Numeric Id of the port to get
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Item'
-    put:
-      tags:
-      - port
-      summary: update a port 
-      parameters:
-      - in: path
-        name: portId  
-        schema:
-          type: integer
-        required: true
-        description: Numeric Id of the port to update
-      requestBody:
-          description: data for port
-          required: true 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemData'
+        - in: path
+          name: numberId
+          schema:
+            type: string
+          required: true
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: integer
+          required: false
       responses:
         '200':
-          description: successful operation
+          description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                $ref: '#/components/schemas/PortNumber'
+    put:
+      tags:
+        - port
+      summary: Update a specific port number
+      operationId: updateNumber
+      parameters:
+      - name: numberId
+        in: path
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: X-Workspace-ID
+        schema:
+          type: integer
+        required: false
+      - in: header
+        name: X-Admin-Token
+        schema:
+          type: integer
+        required: false
+      requestBody:
+        description: Update port number
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortNumber'
+      responses:
+        '204':
+          description: Successfully updated the port number
     delete:
       tags:
       - port
       summary: delete a port
       parameters:
-      - in: path
-        name: portId  
-        schema:
-          type: integer
-        required: true
-        description: Numeric Id of the port to delete
+        - in: path
+          name: numberId
+          schema:
+            type: integer
+          required: true
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: integer
+          required: false
       responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        204:
+          description: No Content
   /port/:
     post:
       tags:
       - port
       summary: create a new port
       requestBody:
-          description: data for port
-          required: true 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemData'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortNumber'
+      parameters:
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: integer
+          required: false
       responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        201:
+          description: Successful Operation
   /extension/list:
     get:
       tags:
-      - extension
-      summary: list available extensions
+        - extension
+      summary: List all extensions
+      parameters:
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: true  
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: integer
+          required: false  
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
-  /extension/{extensionId}:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Extension'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+  /extention/{extensionId}:
     get:
       tags:
-      - extension
-      summary: get extension
+        - extension
+      summary: Get an extension by id
       parameters:
-      - in: path
-        name: extensionId  
-        schema:
-          type: integer
-        required: true
-        description: Numeric Id of the extension to get
+        - name: extensionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: integer
+          required: false
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/Extension'
     put:
       tags:
-      - extension
-      summary: update an extension 
+        - extension
+      summary: Update an extension by id
       parameters:
-      - in: path
-        name: extensionId  
-        schema:
-          type: integer
-        required: true
-        description: Numeric Id of the extension to update
+        - name: extensionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: integer
+          required: false
       requestBody:
-          description: data for extension
-          required: true 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemData'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Extension'
       responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        204:
+          description: Successful operation, no content returned
     delete:
       tags:
-      - extension
-      summary: delete an extension
+        - extension
+      summary: Delete an extension by id
       parameters:
-      - in: path
-        name: extensionId  
-        schema:
-          type: integer
-        required: true
-        description: Numeric Id of the extension to delete
+        - name: extensionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: X-Workspace-ID
+          schema:
+            type: integer
+          required: false
+        - in: header
+          name: X-Admin-Token
+          schema:
+            type: integer
+          required: false
       responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        204:
+          description: Successful operation, no content returned
   /extension/{extensionId}/history:
     get:
       tags:
-      - extension
-      summary: get extension history
+        - extension
+      summary: Get extension data history
       parameters:
-      - in: path
-        name: extensionId  
-        schema:
-          type: integer
-        required: true
-        description: Numeric Id of the extension to update
+        - in: path
+          name: extensionId
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: all
+          schema:
+            type: string
+          required: false
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ExtensionHistory'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /extension/:
     post:
       tags:
-      - extension
-      summary: create a new extension
+        - extension
+      summary: Save an extension
+      operationId: saveExtension
       requestBody:
-          description: data for extension
-          required: true 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemData'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Extension'
       responses:
         '200':
-          description: successful operation
+          description: Extension successfully saved
+          headers:
+            X-Extension-ID:
+              schema:
+                type: string
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-
-
+                $ref: '#/components/schemas/Extension'
   /function/list:
     get:
       tags:
       - function
       summary: list available functions
+      parameters:
+        - $ref: "#/components/parameters/X-Workspace-ID"
+        - $ref: "#/components/parameters/X-Admin-Token"
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MacroFunction'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'                  
   /function/{functionId}:
     parameters:
       - in: path
@@ -583,60 +824,65 @@ paths:
       - function
       summary: get function
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/MacroFunction'
     put:
       tags:
       - function
-      summary: create a new function
+      summary: update a function
+      parameters:
+      - $ref: "#/components/parameters/X-Workspace-ID"
+      - $ref: "#/components/parameters/X-Admin-Token"
       requestBody:
         description: JSON data for function
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/MacroFunction'
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '204':
+          description: No Content
+        
+        
     delete:
       tags:
       - function
       summary: delete a function
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '204':
+          description: No content
+        
+        
   /function/:
     post:
       tags:
       - function
       summary: create a new function
+      parameters:
+      - $ref: "#/components/parameters/X-Workspace-ID"
+      - $ref: "#/components/parameters/X-Admin-Token"      
       requestBody:
-        description: JSON data for function
+        description: Save a function
         content:
           application/json:
               schema:
-                $ref: '#/components/schemas/ItemData'
+                $ref: '#/components/schemas/MacroFunction'
         required: true
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: Macro function saved
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/ApiNoContentResponse'
+              schema:
+                $ref: '#/components/schemas/MacroFunction'
+        
+        
+        
   /function/templateData/{templateId}:
     parameters:
       - in: path
@@ -650,54 +896,81 @@ paths:
       - function
       summary: get function
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/MacroTemplate'
     post:
       tags:
       - function
       summary: create a new function
+      parameters:
+      - $ref: "#/components/parameters/X-Workspace-ID"
+      - $ref: "#/components/parameters/X-Admin-Token"      
       requestBody:
         description: JSON data for function
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+               $ref: '#/components/schemas/MacroTemplate'
         required: true
       responses:
-        200:
+        '200':
           description: successful operation
-          content:
-            application/json:
+          headers:
+            X-Template-ID:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                type: string
   /function/templateData/list:
     get:
       tags:
       - function
       summary: get function
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MacroTemplate'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        
+        
   /byo/carrier/list:
     get:
       tags:
       - byo
       summary: list available carriers
+      parameters:
+        - in: query
+          name: search
+          description: Search query
+          schema:
+            type: string
+        - $ref: "#/components/parameters/X-Workspace-ID"
+        - $ref: "#/components/parameters/X-Admin-Token"
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Carrier'
+                  links:
+                    $ref: '#/components/schemas/PaginationLinks'
   /byo/carrier/{carrierId}:
     parameters:
       - in: path
@@ -711,12 +984,12 @@ paths:
       - byo
       summary: get carrier
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/Carrier'
     put:
       tags:
       - byo
@@ -726,57 +999,70 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/Carrier'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '200':
+          description: Carrier updated successfully
     delete:
       tags:
       - byo
       summary: delete a carrier
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '200':
+          description: Carrier updated successfully
   /byo/carrier/:
     post:
       tags:
       - byo
       summary: create a new carrier
+      parameters:
+      - $ref: "#/components/parameters/X-Admin-Token"
+      - $ref: "#/components/parameters/X-Workspace-ID"
       requestBody:
         description: JSON data for carrier
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/Carrier'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
+        '204':
+          description: No Content
+          headers:
+            X-Carrier-ID:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                type: integer
+              description: Carrier ID
   /byo/did/list:
     get:
       tags:
       - byo
       summary: list available dids
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
+        - in: query
+          name: number
+          schema:
+            type: string
+        - in: query
+          name: region
+          schema:
+            type: string
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DIDNumber'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /byo/did/{didId}:
     parameters:
       - in: path
@@ -790,12 +1076,12 @@ paths:
       - did
       summary: get did
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/DIDNumber'
     put:
       tags:
       - byo
@@ -805,57 +1091,71 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/DIDNumber'
         required: true
       responses:
-        200:
+        '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
     delete:
       tags:
       - byo
       summary: delete a did
       responses:
-        200:
-          description: successful operation
-          content: 
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-  /byo/did/:
-    post:
-      tags:
-      - byo
-      summary: create a new did
-      requestBody:
-        description: JSON data for did
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ItemData'
-        required: true
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        204:
+          description: No Content        
+  # /byo/did/:
+  #   post:
+  #     tags:
+  #     - byo
+  #     summary: create a new did
+  #     requestBody:
+  #       description: JSON data for did
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/ItemData'
+  #       required: true
+  #     responses:
+  #       200:
+  #         description: successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/ApiNoContentResponse'
   /trunk/list:
     get:
       tags:
       - trunk
       summary: list available trunks
+      parameters:
+        - in: query
+          name: name  
+          schema:
+            type: string
+          required: false
+          description: search for name
+        - in: query
+          name: all  
+          schema:
+            type: boolean
+          required: false
+          description: search all        
+        - $ref: "#/components/parameters/X-Admin-Token"
+        - $ref: "#/components/parameters/X-Workspace-ID"
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Trunk'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /trunk/{trunkId}:
     parameters:
       - in: path
@@ -869,72 +1169,94 @@ paths:
       - trunk
       summary: get trunk
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/Trunk'
+        
+        
+                        
     put:
       tags:
       - trunk
       summary: create a new trunk
+      parameters:
+        - $ref: "#/components/parameters/X-Admin-Token"
+        - $ref: "#/components/parameters/X-Workspace-ID"        
       requestBody:
         description: JSON data for trunk
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/Trunk'
         required: true
       responses:
-        200:
+        '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        
+        
+        
+        
     delete:
       tags:
       - trunk
       summary: delete a trunk
+      parameters:  
+        - $ref: "#/components/parameters/X-Admin-Token"
       responses:
-        200:
+        204:
           description: successful operation
-          content: 
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        
+        
+        
   /trunk/:
     post:
       tags:
       - trunk
       summary: create a new trunk
+      parameters:  
+        - $ref: "#/components/parameters/X-Admin-Token"   
+        - $ref: "#/components/parameters/X-Workspace-ID"           
       requestBody:
         description: JSON data for trunk
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/Trunk'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+          '200':
+            description: successful operation
+            headers:
+              X-Trunk-ID:
+                schema:
+                  type: integer
+                description: Trunk ID            
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Trunk'
   /call/list:
     get:
       tags:
       - call
       summary: list available calls
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Call'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /call/{callId}:
     parameters:
       - in: path
@@ -948,25 +1270,35 @@ paths:
       - call
       summary: get call
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/Call'
           
   /log/list:
     get:
       tags:
       - log
       summary: list available logs
+      parameters:
+        - $ref: "#/components/parameters/X-Workspace-ID"
+        - $ref: "#/components/parameters/X-Admin-Token"
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Log'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /log/{logId}:
     parameters:
       - in: path
@@ -980,24 +1312,33 @@ paths:
       - log
       summary: get log
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/Log'
   /recording/list:
     get:
       tags:
       - recording
       summary: list available recordings
+      parameters:
+        - $ref: "#/components/parameters/X-Admin-Token"
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Recording'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /recording/{recordingId}:
     parameters:
       - in: path
@@ -1011,23 +1352,19 @@ paths:
       - recording
       summary: get recording
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/Recording'
     delete:
       tags:
       - recording
       summary: delete a recording
       responses:
-        200:
+        '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
   /recording/tag/:
     post:
       tags:
@@ -1038,15 +1375,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/Recording'
         required: true
       responses:
-        200:
+        '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
   /recording/tag/{tagName}:
     parameters:
       - in: path
@@ -1060,36 +1393,56 @@ paths:
       - recording
       summary: remove recording tag
       responses:
-        200:
+        '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
   /phone/list:
     get:
       tags:
       - phone
       summary: list available phones
+      parameters:
+      - in: query
+        name: name  
+        schema:
+          type: string
+        required: false
+        description: search for name      
+      - $ref: "#/components/parameters/X-Admin-Token"
+      - $ref: "#/components/parameters/X-Workspace-ID"
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Phone'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        
+        
+                            
   /phone/phoneDefs:
     get:
       tags:
       - phone
       summary: get phone definition data
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/PhoneDefinition'
+        
+        
+                                
   /phone/{phoneId}:
     parameters:
       - in: path
@@ -1103,12 +1456,17 @@ paths:
       - phone
       summary: get phone
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Phone'
+        
+        
+                   
     put:
       tags:
       - phone
@@ -1118,15 +1476,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/Phone'
         required: true
       responses:
-        200:
+        '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        
+        
+                
     delete:
       tags:
       - phone
@@ -1134,140 +1491,205 @@ paths:
       responses:
         200:
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        
+        
+                
       
   /phone/:
     post:
       tags:
       - phone
       summary: create a new phone
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
+        - $ref: '#/components/parameters/X-Admin-Token'
       requestBody:
         description: JSON data for phone
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/Phone'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
+        204:
+          description: No Content
+          headers:
+            X-Phone-ID:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                type: string
+        
+        
+                          
   /phoneGroup/list:
     get:
       tags:
       - phoneGroup
       summary: list available phoneGroups
+      parameters:
+        - in: query
+          name: name  
+          schema:
+            type: string
+          required: false
+          description: search for name
+        - $ref: "#/components/parameters/X-Workspace-ID"
+        - $ref: "#/components/parameters/X-Admin-Token"
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PhoneGroup'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        
+        
+        500:  
+          description: Internal Server Error                    
   /phoneGroup/{phoneGroupId}:
     parameters:
       - in: path
         name: phoneGroupId  
         schema:
-          type: integer
+          type: string
         required: true
-        description: Numeric Id of the phoneGroup
+        description: Public Id of the phoneGroup
+      - $ref: "#/components/parameters/X-Workspace-ID"
     get:
       tags:
       - phoneGroup
       summary: get phoneGroup
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/PhoneGroup'
+        
+        
+        500:  
+          description: Internal Server Error   
     put:
       tags:
       - phoneGroup
       summary: create a new phoneGroup
       requestBody:
-        description: JSON data for phoneGroup
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/PhoneGroup'
         required: true
       responses:
-        200:
+        '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        
+        
+        500:  
+          description: Internal Server Error     
     delete:
       tags:
       - phoneGroup
       summary: delete a phoneGroup
       responses:
-        200:
+        '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'      
+        
+        
+        500:  
+          description: Internal Server Error   
   /phoneGroup/:
     post:
       tags:
       - phoneGroup
       summary: create a new phoneGroup
+      parameters:
+        - $ref: "#/components/parameters/X-Workspace-ID"
+        - $ref: "#/components/parameters/X-Admin-Token"
       requestBody:
-        description: JSON data for phoneGroup
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/PhoneGroup'
         required: true
       responses:
-        200:
-          description: successful operation
+        204:
+          description: No Content
+          headers:
+            X-Group-ID:
+              schema:
+                type: string
+              description: ID of the newly created group
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                $ref: '#/components/schemas/PhoneGroup'
+        
+        
+        500:  
+          description: Internal Server Error    
   /phoneGlobalSetting/list:
     get:
       tags:
       - phoneGlobalSetting
       summary: list available phoneGlobalSettings
+      parameters:
+        - in: query
+          name: name  
+          schema:
+            type: string
+          required: false
+          description: search for name
+        - $ref: "#/components/parameters/X-Workspace-ID"
+        - $ref: "#/components/parameters/X-Admin-Token"      
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PhoneGlobalSetting'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        
+        
+        500:  
+          description: Internal Server Error                        
   /phoneGlobalSetting/{phoneGlobalSettingId}:
     parameters:
       - in: path
         name: phoneGlobalSettingId  
         schema:
-          type: integer
+          type: string
         required: true
         description: Numeric Id of the phone global setting
+      - $ref: '#/components/parameters/X-Workspace-ID'  
     get:
       tags:
       - phoneGlobalSetting
       summary: get phoneGlobalSetting
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/PhoneGlobalSetting'
+        
+        
+        500:  
+          description: Internal Server Error                        
     put:
       tags:
       - phoneGlobalSetting
@@ -1277,63 +1699,91 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/PhoneGlobalSetting'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        204:
+          description: No Content
+        
+        
+        500:  
+          description: Internal Server Error                                  
     delete:
       tags:
       - phoneGlobalSetting
       summary: delete a phoneGlobalSetting
       responses:
-        200:
+        '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        
+        
+        500:  
+          description: Internal Server Error                                    
   /phoneGlobalSetting/:
     post:
       tags:
       - phoneGlobalSetting
       summary: create a new phoneGlobalSetting
+      parameters:
+        - $ref: '#/components/parameters/X-Admin-Token'
+        - $ref: '#/components/parameters/X-Workspace-ID'
       requestBody:
         description: JSON data for phoneGlobalSetting
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/PhoneGlobalSetting'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
+        204:
+          description: No Content
+          headers:
+            X-GlobalSetting-ID:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                type: string
+        
+        
+        500:  
+          description: Internal Server Error   
+        
   /phoneIndividualSetting/list:
     get:
       tags:
       - phoneIndividualSetting
       summary: list available phoneIndividualSettings
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
+        - $ref: '#/components/parameters/X-Admin-Token'
+        - name: name
+          in: query
+          schema:
+            type: string
+          description: Search parameter for phone individual setting's name      
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PhoneIndividualSetting'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        
+        
+        
+        
+        
   /phoneIndividualSetting/{phoneIndividualSettingId}:
     parameters:
       - in: path
         name: phoneIndividualSettingId  
         schema:
-          type: integer
+          type: string
         required: true
         description: Numeric Id of the phone individual setting
     get:
@@ -1341,244 +1791,300 @@ paths:
       - phoneIndividualSetting
       summary: get phoneIndividualSetting
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/PhoneIndividualSetting'
+        
+        
+        
+        
+        
     put:
       tags:
       - phoneIndividualSetting
       summary: create a new phoneIndividualSetting
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
       requestBody:
         description: JSON data for phoneIndividualSetting
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/PhoneIndividualSetting'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        204:
+          description: No Content
+        
+        
+        
+        
+                        
     delete:
       tags:
       - phoneIndividualSetting
       summary: delete a phoneIndividualSetting
       responses:
-        200:
+        '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-      
-  /phoneIndividualSetting/:
-    post:
-      tags:
-      - phoneIndividualSetting
-      summary: create a new phoneIndividualSetting
-      requestBody:
-        description: JSON data for phoneIndividualSetting
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ItemData'
-        required: true
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        
+        
+        
+        
+              
+  # /phoneIndividualSetting/:
+  #   post:
+  #     tags:
+  #     - phoneIndividualSetting
+  #     summary: create a new phoneIndividualSetting
+  #     requestBody:
+  #       description: JSON data for phoneIndividualSetting
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/ItemData'
+  #       required: true
+  #     responses:
+  #       200:
+  #         description: successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/ApiNoContentResponse'
   /file/list:
     get:
       tags:
       - file
       summary: list available files
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
+        - $ref: '#/components/parameters/X-Admin-Token'
+        - name: name
+          in: query
+          schema:
+            type: string
+          description: Search parameter for specific filename                    
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/File'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        
+        
+        
+        
+                                  
   /file/{fileId}:
     parameters:
       - in: path
         name: fileId  
         schema:
-          type: integer
+          type: string
         required: true
-        description: Numeric Id of the file
+        description: Id of the file
     delete:
       tags:
       - file
       summary: delete a file
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-      
+              '200':
+                description: successful operation
   /file/upload:
     post:
       tags:
       - file
       summary: create a new file
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
+        - $ref: '#/components/parameters/X-Admin-Token'      
       requestBody:
         description: JSON data for file
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/FileRequest'
         required: true
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                $ref: '#/components/schemas/UploadResponse'
+        
+        
+        
+        
+              
   /file/uploadFromGoogleDrive:
     post:
       tags:
       - file
       summary: create a new file
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
+        - $ref: '#/components/parameters/X-Admin-Token'      
       requestBody:
         description: JSON data for file
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/GoogleDriveUploadRequest'
         required: true
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-  /file/uploadFromThirdParty:
-    post:
-      tags:
-      - file
-      summary: create a new file
-      requestBody:
-        description: JSON data for file
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ItemData'
-        required: true
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                $ref: '#/components/schemas/UploadResponse'
+        
+        
+        
+        
+                             
+  # /file/uploadFromThirdParty:
+  #   post:
+  #     tags:
+  #     - file
+  #     summary: create a new file
+  #     requestBody:
+  #       description: JSON data for file
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/ItemData'
+  #       required: true
+  #     responses:
+  #       200:
+  #         description: successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/ApiNoContentResponse'
   /fax/list:
     get:
       tags:
       - fax
       summary: list available faxs
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
+        - $ref: '#/components/parameters/X-Admin-Token'
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Fax'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /fax/{faxId}:
     parameters:
       - in: path
         name: faxId  
         schema:
-          type: integer
+          type: string
         required: true
-        description: Numeric Id of the fax
+        description: Id of the fax
     get:
       tags:
       - fax
       summary: get fax
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/Fax'
     delete:
       tags:
       - fax
       summary: delete a fax
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-      
-  /credit/list:
-    get:
-      tags:
-      - credit
-      summary: list available credits
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemList'
+        '204':
+          description: No Content
+  # /credit/list:
+  #   get:
+  #     tags:
+  #     - credit
+  #     summary: list available credits
+  #     responses:
+  #       200:
+  #         description: successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/ItemList'
   /credit/checkoutWithPayPal:
-    get:
+    post:
       tags:
       - credit
-      summary: delete a credit
+      summary: checkout with Paypal
+      parameters:
+        - $ref: '#/components/parameters/X-Admin-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditRequest'        
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-      
+        '200':
+            description: successful operation
   /credit/checkoutWithPayPalDone:
     get:
       tags:
       - credit
-      summary: delete a credit
+      summary: get PayPal done url
+      parameters:
+      - in: query
+        name: paymentid  
+        schema:
+          type: string
+        required: true
+        description: payment id
+      - in: query
+        name: PayerID  
+        schema:
+          type: string
+        required: true
+        description: payer id  
+      - in: query
+        name: creditId  
+        schema:
+          type: string
+        required: true
+        description: credit id  
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-      
+        '302':
+          description: Redirect
+    
   /credit/checkoutWithPayPalFail:
     get:
       tags:
       - credit
-      summary: delete a credit
+      summary: get PayPal fail url
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-      
+        '302':
+          description: Redirect
   /credit/:
     post:
       tags:
@@ -1589,27 +2095,33 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/CreditRequest'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '404':
+          description: Not Found
+        
   /card/list:
     get:
       tags:
       - card
       summary: list available cards
+      parameters:
+        - $ref: "#/components/parameters/X-Admin-Token"
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Card'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /card/{cardId}:
     parameters:
       - in: path
@@ -1617,38 +2129,37 @@ paths:
         schema:
           type: integer
         required: true
-        description: Numeric Id of the card
+        description: Id of the card
     delete:
       tags:
       - card
       summary: delete a card
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-      
+        204:
+          description: Card deleted successfully
   /card/:
     post:
       tags:
       - card
       summary: create a new card
+      parameters:
+        - $ref: "#/components/parameters/X-Admin-Token"
+        - $ref: "#/components/parameters/X-Workspace-ID"
       requestBody:
         description: JSON data for card
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/Card'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
+        201:
+          description: Card added successfully
+          headers:
+            X-Card-ID:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                type: string
+                description: The ID of the created card
   /card/{cardId}/setPrimary:
     parameters:
       - in: path
@@ -1657,36 +2168,45 @@ paths:
           type: integer
         required: true
         description: Numeric Id of the card
-    post:
+    put:
       tags:
       - card
       summary: create a new card
+      parameters:
+        - $ref: "#/components/parameters/X-Admin-Token"
+        - $ref: "#/components/parameters/X-Workspace-ID"
       requestBody:
         description: JSON data for card
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/Card'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '204':
+          description: No Content
   /workspaceUser/list:
     get:
       tags:
       - workspaceUser
       summary: list available workspaceUsers
+      parameters:
+        - $ref: "#/components/parameters/X-Workspace-ID"
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkspaceUser'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        
   /workspaceUser/{userId}:
     parameters:
       - in: path
@@ -1695,18 +2215,14 @@ paths:
           type: integer
         required: true
         description: Numeric Id of the user
+      - $ref: "#/components/parameters/X-Workspace-ID"        
     delete:
       tags:
       - workspaceUser
       summary: delete a workspaceUser
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-      
+        '200':
+          description: Successful operation
   /workspaceUser/:
     post:
       tags:
@@ -1717,15 +2233,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: "#/components/schemas/WorkspaceUser"
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
+        '200':
+          description: Successful operation
+          headers:
+            X-WorkspaceUser-ID:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                type: string
   /workspaceUser/{userId}/resendInvite:
     parameters:
       - in: path
@@ -1738,96 +2254,116 @@ paths:
       tags:
       - workspaceUser
       summary: resend invitation for workspace
-      requestBody:
-        description: JSON data for workspaceUser
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ItemData'
-        required: true
+      parameters:
+        - $ref: "#/components/parameters/X-Admin-Token"
+        - $ref: "#/components/parameters/X-Workspace-ID"
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '200':
+          description: Successful operation
   /workspaceParams/list:
     get:
       tags:
       - workspaceParams
       summary: list available workspaceParamss
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'      
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
-
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkspaceParam'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /workspaceParams/saveParams:
     post:
       tags:
       - workspaceParams
       summary: create a new workspaceParams
+      parameters:
+        - $ref: "#/components/parameters/X-Workspace-ID"
+        - $ref: "#/components/parameters/X-Admin-Token"
       requestBody:
         description: JSON data for workspaceParams
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/WorkspaceParam'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '204':
+          description: No Content
   /workspaceRoutingACL/list:
     get:
       tags:
       - workspaceRoutingACL
       summary: list available workspaceRoutingACLs
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
-  /workspaceRoutingACL/saveParams:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkspaceRoutingAcl'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        
+        
+                           
+  /workspaceRoutingACL/saveACLs:
     post:
       tags:
       - workspaceRoutingACL
       summary: create a new workspaceRoutingACL
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
+        - $ref: '#/components/parameters/X-Admin-Token'
       requestBody:
         description: JSON data for workspaceRoutingACL
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/WorkspaceRoutingAcl'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-  /setting/verifiedCallerIDs/list:
+        204:
+          description: No Content
+  /settings/verifiedCallerIDs/list:
     get:
       tags:
       - settings
       summary: list caller ids
+      parameters:
+        - $ref: "#/components/parameters/X-Admin-Token"
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
-  /setting/verifiedCallerIDs/{verifiedCallerID}:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/VerifiedCallerId'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        
+  /settings/verifiedCallerIDs/{verifiedCallerID}:
     parameters:
       - in: path
         name: verifiedCallerID  
@@ -1840,114 +2376,131 @@ paths:
       - settings
       summary: delete a setting
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        204:
+          description: No Content
+        
+        
       
-  /setting/verifiedCallerID:
+  /settings/verifiedCallerID:
     post:
       tags:
       - settings
       summary: create a new setting
+      parameters:
+        - $ref: "#/components/parameters/X-Admin-Token"
       requestBody:
         description: JSON data for setting
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/VerifiedCallerId'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-  /setting/verifiedCallerID/confirm:
+        204:
+          description: No Content
+        
+        
+  /settings/verifiedCallerID/confirm:
     post:
       tags:
       - settings
       summary: create a new setting
+      parameters:
+        - $ref: "#/components/parameters/X-Admin-Token"
       requestBody:
         description: JSON data for setting
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/VerifiedCallerId'
         required: true
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+                type: object
+                properties:
+                  success:
+                    type: boolean
   /setting/blockedNumbers/list:
     get:
       tags:
       - settings
       summary: list caller ids
+      parameters:
+        - $ref: '#/components/parameters/X-Admin-Token'
       responses:
-        200:
-          description: successful operation
+        '200':
+          description: "Successful operation"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BlockedNumber'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'     
+        
+        
   /setting/blockedNumbers/{blockedNumberId}:
     parameters:
     - in: path
       name: blockedNumberId  
       schema:
-        type: integer
+        type: string
       required: true
-      description: Numeric Id of the blocked number
+      description: Id of the blocked number
     delete:
       tags:
       - settings
       summary: delete a setting
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-      
+        '204':
+          description: "No Content"
   /setting/blockedNumber:
     post:
       tags:
       - settings
       summary: create a new setting
+      parameters:
+        - $ref: '#/components/parameters/X-Admin-Token'
+        - $ref: '#/components/parameters/X-Workspace-ID'      
       requestBody:
         description: JSON data for setting
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/BlockedNumber'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        '204':
+          description: "No Content"
   /setting/ipWhitelist/list:
     get:
       tags:
       - settings
       summary: list caller ids
+      parameters:
+        - $ref: "#/components/parameters/X-Admin-Token"
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/IpWhitelist'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /setting/ipWhitelist/{ipWhitelistId}:
     parameters:
     - in: path
@@ -1961,103 +2514,1098 @@ paths:
       - settings
       summary: delete a setting
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
-      
+        204:
+          description: No Content      
   /setting/ipWhitelist:
     post:
       tags:
       - settings
       summary: create a new setting
+      parameters:
+        - $ref: "#/components/parameters/X-Admin-Token"
+        - $ref: "#/components/parameters/X-Workspace-ID"
       requestBody:
         description: JSON data for setting
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/IpWhitelist'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        204:
+          description: No Content
   /setting/extensionCode/list:
     get:
       tags:
       - settings
       summary: list caller ids
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
+        - $ref: '#/components/parameters/X-Admin-Token'
       responses:
-        200:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemList'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ExtensionCode'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
   /setting/extensionCode:
     post:
       tags:
       - settings
       summary: create a new setting
+      parameters:
+        - $ref: '#/components/parameters/X-Workspace-ID'
+        - $ref: '#/components/parameters/X-Admin-Token'
       requestBody:
         description: JSON data for setting
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: '#/components/schemas/ExtensionCode'
         required: true
       responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiNoContentResponse'
+        204:
+          description: No content
 components:
+  headers:
+    X-Template-ID:
+      schema:
+        type: string
+  parameters:
+    X-Workspace-ID:
+      in: header
+      name: X-Workspace-ID
+      schema:
+        type: integer
+      required: true  
+    X-Admin-Token:
+      in: header
+      name: X-Admin-Token
+      schema:
+        type: integer
+      required: false  
   schemas:
-    ApiNoContentResponse:
-      type: string
-    ItemData:
-        type: object
-        required: 
-          - name
-          - description
-          - json
-        properties:
-          name:
+    Authenticate:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        otp:
+          type: string
+          default: ""
+        challange:
+          type: string
+          default: null
+      required:
+        - email
+        - password
+        - otp
+        - challange
+    WidgetTemplateRequest:
+      type: object
+      required:
+        - title
+        - data
+        - tags
+      properties:
+        title:
+          type: string
+        data:
+          type: array
+          items:
             type: string
-          description:
+        tags:
+          type: array
+          items:
             type: string
-          json:
-            description: JSON data
-            type: object
-            required:
-              - cells
-            properties:
-              cells:
-                type: array 
-                items:
-                  type: object
-    ItemList:
-        type: array
-        items:
-          $ref: '#/components/schemas/Item'
-    Item:
+    WidgetTemplate:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          readOnly: true
+        updatedAt:
+          type: string
+          readOnly: true
+        title:
+          type: string
+        data:
+          type: string
+        tags:
+          type: string  
+        userId:
+          type: integer
+          readOnly: true
+        workspaceId:
+          type: integer
+          readOnly: true
+      required:
+        - title
+        - data
+        - tags
+        - workspaceId
+    Flow:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        description:
+          type: string
+        flow_json:
+          type: string
+          nullable: true
+        started:
+          type: boolean
+        public_id:
+          type: string
+          nullable: true
+          readOnly: true
+        workspace_id:
+          type: integer
+          readOnly: true
+        user_id:
+          type: integer
+          readOnly: true
+        category:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+        - name
+        - description
+        - started
+        - category
+    DIDNumber:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          readOnly: true
+        updatedAt:
+          type: string
+          readOnly: true
+        number:
+          type: string
+        country:
+          type: string
+        region:
+          type: string
+        name:
+          type: string
+        monthlyCost:
+          type: integer
+        userId:
+          type: integer
+          readOnly: true
+        flowId:
+          type: integer
+        provider:
+          type: string
+        providerId:
+          type: string
+        trialNumber:
+          type: boolean
+        apiNumber:
+          type: string
+        publicId:
+          type: string
+          readOnly: true
+        workspaceId:
+          type: integer
+          readOnly: true
+        didAction:
+          type: string
+          default: "accept-call"
+        features:
+          type: string
+        type:
+          type: string
+        availability:
+          type: string
+        active:
+          type: boolean
+          default: true
+        setupCost:
+          type: integer
+        trunkId:
+          type: integer
+        externalAppDid:
+          type: boolean
+          default: false
+      required:
+        - number
+        - api_number
+        - monthly_cost
+        - setup_cost
+        - provider 
+        - country
+        - string
+        - type   
+    PortNumber:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        number:
+          type: string
+        provider:
+          type: string
+        status:
+          type: string
+        user_id:
+          type: integer
+          nullable: true
+          readOnly: true
+        workspace_id:
+          type: integer
+          readOnly: true
+        public_id:
+          type: string
+          readOnly: true
+        first_name:
+          type: string
+        last_name:
+          type: string
+        address_line_1:
+          type: string
+        address_line_2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+        estimated_completion_date:
+          type: string
+        eta:
+          type: string
+          nullable: true
+        info_needed:
+          type: string
+        type_of_port:
+          type: string
+        numbers:
+          type: string
+      required:
+        - number
+        - status
+        - provider  
+    Extension:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        user_id:
+          type: integer
+          readOnly: true
+        public_id:
+          type: string
+          readOnly: true
+        workspace_id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+        secret:
+          type: string
+        caller_id:
+          type: string
+        last_registered:
+          type: string
+        register_expires:
+          type: integer
+        flow_id:
+          type: integer
+        tags:
+          type: array
+          items:
+            type: string
+    ExtensionResponse:
+      type: object
+      properties:
+        userid:
+          type: integer
+        workspace_id:
+          type: integer
+        username:
+          type: string
+        secret:
+          type: string
+        caller_id:
+          type: string
+        flow_id:
+          type: integer
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+        - username
+        - secret
+        - caller_id        
+    ExtensionHistory:
+      type: object
+      properties:
+        duration_live:
+          type: integer
+        duration_live_human:
+          type: string
+        duration_ended:
+          type: integer
+          nullable: true
+        duration_ended_human:
+          type: string
+          nullable: true
+    MacroFunction:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        public_id:
+          type: string
+          readOnly: false
+        workspace_id:
+          type: integer
+          readOnly: true
+        user_id:
+          type: integer
+          readOnly: false  
+        title:
+          type: string
+        code:
+          type: string
+        compiled_code:
+          type: string  
+      required:
+        - title
+        - code
+    MacroTemplate:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        public_id:
+          type: string  
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        title:
+          type: string
+        code:
+          type: string
+        changeable_params:
+          type: string    
+      required:
+        - title
+        - code     
+    Carrier:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        public_id:
+          type: string
+          readOnly: true
+        user_id:
+          type: integer
+          readOnly: true
+        workspace_id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        ip_address:
+          type: string
+        routes:
+          type: string
+        auths:
+          type: string    
+      required:
+        - routes
+        - auths
+    Trunk:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        public_id:
+          type: string
+          readOnly: true  
+        workspace_id:
+          type: integer
+          readOnly: true
+        user_id:
+          type: integer
+          readOnly: true  
+        name:
+          type: string
+        record:
+          type: string
+        record_type:
+          type: string
+        active:
+          type: boolean  
+      required:
+        - name      
+    Phone:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        public_id:
+          type: string
+          readOnly: true
+        tags:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        mac_address:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        needs_provisioning:
+          type: boolean  
+        phone_type:
+          type: string
+        group_id:
+          type: string
+      required:
+        - tags
+        - name
+        - mac_address
+        - phone_type
+    PhoneDefinition:
+      type: object
+      properties:
+        phone_type:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        data1:
+          type: string
+        data2:
+          type: string
+    PhoneGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        public_id:
+          type: string
+          readOnly: true
+        user_id:
+          type: integer
+          readOnly: true
+        workspace_id:
+          type: integer 
+          readOnly: true 
+        number:
+          type: string
+        name:
+          type: string
+      required:
+        - name
+        - number
+    PhoneGlobalSetting:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        user_id:
+          type: integer
+          readOnly: false
+        workspace_id:
+          type: integer
+          readOnly: true
+        public_id:
+          type: string
+          readOnly: true
+        phone_type:
+          type: integer
+        phone_group:
+          type: integer
+        setting_variable_name:
+          type: string
+        setting_option_1:
+          type: string
+        model:
+          type: string
+        manufacturer:
+          type: string
+        group:
+          type: string      
+      required:
+        - phone_type
+        - phone_group 
+    PhoneIndividualSetting:
         type: object
         properties:
           id:
             type: integer
-          name:
+            readOnly: true
+          created_at:
             type: string
-          description:
+            readOnly: true
+          updated_at:
             type: string
-          json:
-            type: string                  
+            readOnly: true
+          public_id:
+              type: string
+              readOnly: true
+          user_id:
+            type: integer
+            readOnly: true
+          workspace_id:
+            type: integer    
+            readOnly: true
+          phone_type:
+            type: integer
+          phone_group:
+            type: integer
+          setting_variable_name:
+            type: string
+          setting_option_1:
+            type: string
+        required:
+          - phone_type
+          - setting_variable_name
+          - setting_option_1    
+    FileRequest:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+      required:
+        - files          
+    GoogleDriveUploadRequest:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+      required:
+        - accessToken
+        - files
+    UploadResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+    File:
+      type: object
+      properties:
+        title:
+          type: string
+        extension:
+          type: string
+        size:
+          type: integer
+    Fax:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        api_id:
+          type: string
+        uri:
+          type: string
+        user_id:
+          type: integer
+          readOnly: true
+        workspace_id:
+          type: integer
+          readOnly: true
+        size:
+          type: integer
+        call_id:
+          type: integer
+        name:
+          type: string
+        plan_snapshot:
+          type: string
+      required:
+        - api_id
+        - uri
+        - workspace_id
+        - size
+        - call_id
+        - name
+        - plan_snapshot                        
+    CreditRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+        card_id:
+          type: string 
+    Card:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          readOnly: true
+        updatedAt:
+          type: string
+          readOnly: true
+        issuer:
+          type: string
+        last_4:
+          type: string
+        stripe_id:
+          type: string
+        user_id:
+          type: integer
+          readOnly: true
+        primary:
+          type: boolean
+          default: false
+        workspace_id:
+          type: integer
+          readOnly: true
+      required:
+        - issuer
+        - last_4
+        - stripe_id       
+    WorkspaceUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        public_id:
+          type: string
+          readOnly: true
+        hash:
+          type: string
+        verified:
+          type: boolean
+        hash_expired:
+          type: boolean
+        extension_id:
+          type: integer
+          readOnly: true
+        number_id:
+          type: integer
+          readOnly: true
+        preferred_pop:
+          type: string
+        joined_at:
+          type: string
+          readOnly: true
+      required:
+        - hash
+        - verified
+        - hash_expired
+        - preferred_pop
+    WorkspaceParam:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        workspace_id:
+          type: integer
+          readOnly: true
+        key:
+          type: string
+        value:
+          type: string
+      required:
+        - workspace_id
+        - key
+        - value         
+    VerifiedCallerId:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          readOnly: true
+        created_at:
+          type: "string"
+          readOnly: true
+        updated_at:
+          type: "string"
+          readOnly: true
+        user_id:
+          type: "integer"
+          nullable: true
+        number:
+          type: "string"
+        workspace_id:
+          type: "integer"
+      required:
+      - number
+      - workspace_id  
+    WorkspaceRoutingAcl:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          readOnly: true
+        updatedAt:
+          type: string
+          readOnly: true
+        routingAclId:
+          type: integer
+          nullable: true
+        workspaceId:
+          type: integer
+          nullable: true
+        enabled:
+          type: boolean
+          default: true
+      required:
+        - id
+        - enabled
+    BlockedNumber:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        user_id:
+          type: integer
+          readOnly: true
+        number:
+          type: string
+        public_id:
+          type: string
+      required:
+        - number
+        - public_id
+    IpWhitelist:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+        updated_at:
+          type: string
+          readOnly: true
+        public_id:
+          type: string
+        user_id:
+          type: integer
+          readOnly: true
+        ip:
+          type: string
+        range:
+          type: string
+        workspace_id:
+          readOnly: true
+          type: integer                  
+      required:
+        - ip
+        - range
+    ExtensionCode:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          readOnly: true
+        updatedAt:
+          type: string
+          readOnly: true
+        workspaceId:
+          type: integer
+          readOnly: true
+        flowId:
+          type: integer
+        name:
+          type: string
+        code:
+          type: string
+        publicId:
+          type: string
+          readOnly: true
+      required:
+        - flowId
+        - name
+        - code
+    Call:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        apiId:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        status:
+          type: string
+        direction:
+          type: string
+        duration:
+          type: integer
+        createdAt:
+          type: string
+          readOnly: true
+        updatedAt:
+          type: string
+          readOnly: true
+        userId:
+          type: integer
+      required:
+        - apiId
+        - from
+        - to
+        - status
+        - direction
+        - duration
+        - userId
+    Log:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          readOnly: true
+        updatedAt:
+          type: string
+          readOnly: true
+        from:
+          type: string
+        to:
+          type: string
+        title:
+          type: string
+        report:
+          type: string
+        workspaceId:
+          type: integer
+          readOnly: true
+        flowId:
+          type: integer
+        apiId:
+          type: string
+        level:
+          type: string
+          default: info
+      required:
+        - from
+        - to
+        - title
+        - report
+    Recording:
+      type: object
+      properties:
+        api_id:
+          type: string
+        status:
+          type: string
+        uri:
+          type: string
+        user_id:
+          type: integer
+          readOnly: true
+        call_id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        duration:
+          type: integer
+        size:
+          type: number
+        workspace_id:
+          type: integer
+          readOnly: true
+        transcription_ready:
+          type: boolean
+        transcription_text:
+          type: string
+        plan_snapshot:
+          type: string
+        storage_id:
+          type: string
+        storage_server_ip:
+          type: string
+        s3_url:
+          type: string
+        relocation_attempts:
+          type: integer
+        trim:
+          type: boolean
+      required:
+        - api_id
+        - status
+        - uri
+        - name
+        - duration
+        - size
+    Pagination:
+        type: object
+        properties:
+          links:
+            $ref: '#/components/schemas/PaginationLinks'
+          meta:
+            $ref: '#/components/schemas/PaginationMeta'            
+    PaginationLinks:
+      type: object
+      properties:
+        self:
+          type: string
+        first:
+          type: string
+        prev:
+          type: string
+        next:
+          type: string
+        last:
+          type: string
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+        count:
+          type: integer
+        per_page:
+          type: integer
+        current_page:
+          type: integer
+        total_pages:
+          type: integer            
   securitySchemes:
     bearerAuth:      
       type: http      
