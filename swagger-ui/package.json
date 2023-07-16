@@ -56,7 +56,7 @@
     "cy:run": "cypress run",
     "cy:ci": "start-server-and-test cy:start http://localhost:3204 cy:run",
     "cy:dev": "start-server-and-test cy:start http://localhost:3204 cy:open",
-    "open-static": "node -e \"require('open')('http://localhost:3002')\"",
+    "open-static": "node -e \"import('open').then(module => module.default('http://localhost:3002'))\"",
     "security-audit": "run-s -sc security-audit:all security-audit:prod",
     "security-audit:prod": "npm-audit-ci-wrapper -p -t low",
     "security-audit:all": "npm-audit-ci-wrapper -t moderate",
