@@ -1,0 +1,2065 @@
+openapi: 3.0.3
+info:
+  title: Lineblocs web API
+  description: Official documentation for Lineblocs web API
+  termsOfService: https://lineblocs.com/pages/tos
+  contact:
+    url: https://lineblocs.com/contact
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+    description: Find out more
+    url: https://lineblocs.com
+servers:
+- url: https://lineblocs.com/api/v1
+- url: http://lineblocs.com/api/v1
+security:
+- bearerAuth: []  
+tags:
+- name: Lineblocs web API
+  description: All about the APIs
+- name: widgetTemplate
+  description: save widget template
+  # externalDocs:
+  #   description: Find out more
+  #   url: /widgetTemplate/
+- name: flow
+  description: create and manage flows
+  # externalDocs:
+  #   description: null
+  #   url: /flow/
+- name: did
+  description: create and manage DID numbers
+  # externalDocs:
+  #   description: null
+  #   url: /did/
+- name: port
+  description: create and manage port requests
+  # externalDocs:
+  #   description: null
+  #   url: /port/
+- name: extension
+  description: create and manage extensions
+  # externalDocs:
+  #   description: null
+  #   url: /extension/
+- name: function
+  description: create and manage macro functions
+  # externalDocs:
+  #   description: null
+  #   url: /function/
+- name: byo
+  description: create and manage byo data
+  # externalDocs:
+  #   description: null
+  #   url: /byo/
+- name: trunk
+  description: create and manage hosted SIP trunks
+  # externalDocs:
+  #   description: null
+  #   url: /trunk/
+- name: phone
+  description: Update and manage physical phones
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: phoneGroup
+  description: Update and manage physical phones
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: phoneGlobalSetting
+  description: Update and manage global settings
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: phoneIndividualSetting
+  description: Update and manage individual settings
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: file
+  description: Update and manage media files
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: fax
+  description: Manage fax resources
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: credit
+  description: Manage user credits
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: card
+  description: Manage user cards
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: workspaceUser
+  description: Manage workspace users
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: workspaceParams
+  description: Manage workspace params
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: workspaceRoutingACL
+  description: Manage workspace ACLs
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: settings
+  description: Manage workspace settings
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+- name: user
+  description: Operations about user
+  # externalDocs:
+  #   description: Find out more about our store
+  #   url: http://swagger.io
+paths:
+  /widgetTemplate/list:
+    get:
+      tags:
+      - widgetTemplate
+      summary: list available widget templates
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /widgetTemplate/:
+    post:
+      tags:
+      - widgetTemplate
+      summary: create a new widget template
+      requestBody:
+        description: data for widget template
+        required: true 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /flow/list:
+    get:
+      tags:
+      - flow
+      summary: list available flows
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /flow/{flowId}:
+    get:
+      tags:
+      - flow
+      summary: get flow
+      parameters:
+      - in: path
+        name: flowId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the flow to get
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - flow
+      summary: update a flow 
+      parameters:
+      - in: path
+        name: flowId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the flow to update
+      requestBody:
+          description: data for flow
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - flow
+      summary: delete a flow
+      parameters:
+      - in: path
+        name: flowId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the flow to delete
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /flow/:
+    post:
+      tags:
+      - flow
+      summary: create a new flow
+      requestBody:
+          description: data for flow
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /did/list:
+    get:
+      tags:
+      - did
+      summary: list available dids
+      responses:
+          200:
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ItemList'
+  /did/availableNumbers:
+    get:
+      tags:
+      - did
+      summary: list available dids
+      responses:
+        200:
+          description: successful operation
+  /did/{didId}:
+    get:
+      tags:
+      - did
+      summary: get did
+      parameters:
+      - in: path
+        name: didId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the did to get
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - did
+      summary: update a did
+      parameters:
+      - in: path
+        name: didId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the did to update
+      requestBody:
+          description: data for flow
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - did
+      summary: delete a did
+      parameters:
+      - in: path
+        name: didId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the did to delete
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /did/:
+    post:
+      tags:
+      - did
+      summary: create a new did
+      requestBody:
+          description: data for did
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /port/list:
+    get:
+      tags:
+      - port
+      summary: list available ports
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /port/{portId}:
+    get:
+      tags:
+      - port
+      summary: get port
+      parameters:
+      - in: path
+        name: portId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the port to get
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - port
+      summary: update a port 
+      parameters:
+      - in: path
+        name: portId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the port to update
+      requestBody:
+          description: data for port
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - port
+      summary: delete a port
+      parameters:
+      - in: path
+        name: portId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the port to delete
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /port/:
+    post:
+      tags:
+      - port
+      summary: create a new port
+      requestBody:
+          description: data for port
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /extension/list:
+    get:
+      tags:
+      - extension
+      summary: list available extensions
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /extension/{extensionId}:
+    get:
+      tags:
+      - extension
+      summary: get extension
+      parameters:
+      - in: path
+        name: extensionId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the extension to get
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - extension
+      summary: update an extension 
+      parameters:
+      - in: path
+        name: extensionId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the extension to update
+      requestBody:
+          description: data for extension
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - extension
+      summary: delete an extension
+      parameters:
+      - in: path
+        name: extensionId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the extension to delete
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /extension/{extensionId}/history:
+    get:
+      tags:
+      - extension
+      summary: get extension history
+      parameters:
+      - in: path
+        name: extensionId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the extension to update
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /extension/:
+    post:
+      tags:
+      - extension
+      summary: create a new extension
+      requestBody:
+          description: data for extension
+          required: true 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+
+
+  /function/list:
+    get:
+      tags:
+      - function
+      summary: list available functions
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /function/{functionId}:
+    parameters:
+      - in: path
+        name: functionId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the function
+    get:
+      tags:
+      - function
+      summary: get function
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - function
+      summary: create a new function
+      requestBody:
+        description: JSON data for function
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - function
+      summary: delete a function
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /function/:
+    post:
+      tags:
+      - function
+      summary: create a new function
+      requestBody:
+        description: JSON data for function
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiNoContentResponse'
+  /function/templateData/{templateId}:
+    parameters:
+      - in: path
+        name: templateId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the template
+    get:
+      tags:
+      - function
+      summary: get function
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    post:
+      tags:
+      - function
+      summary: create a new function
+      requestBody:
+        description: JSON data for function
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /function/templateData/list:
+    get:
+      tags:
+      - function
+      summary: get function
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /byo/carrier/list:
+    get:
+      tags:
+      - byo
+      summary: list available carriers
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+  /byo/carrier/{carrierId}:
+    parameters:
+      - in: path
+        name: carrierId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the carrier
+    get:
+      tags:
+      - byo
+      summary: get carrier
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - byo
+      summary: create a new carrier
+      requestBody:
+        description: JSON data for carrier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - byo
+      summary: delete a carrier
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /byo/carrier/:
+    post:
+      tags:
+      - byo
+      summary: create a new carrier
+      requestBody:
+        description: JSON data for carrier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /byo/did/list:
+    get:
+      tags:
+      - byo
+      summary: list available dids
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /byo/did/{didId}:
+    parameters:
+      - in: path
+        name: didId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the did
+    get:
+      tags:
+      - did
+      summary: get did
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - byo
+      summary: create a new did
+      requestBody:
+        description: JSON data for did
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - byo
+      summary: delete a did
+      responses:
+        200:
+          description: successful operation
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /byo/did/:
+    post:
+      tags:
+      - byo
+      summary: create a new did
+      requestBody:
+        description: JSON data for did
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /trunk/list:
+    get:
+      tags:
+      - trunk
+      summary: list available trunks
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /trunk/{trunkId}:
+    parameters:
+      - in: path
+        name: trunkId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the trunk
+    get:
+      tags:
+      - trunk
+      summary: get trunk
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - trunk
+      summary: create a new trunk
+      requestBody:
+        description: JSON data for trunk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - trunk
+      summary: delete a trunk
+      responses:
+        200:
+          description: successful operation
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /trunk/:
+    post:
+      tags:
+      - trunk
+      summary: create a new trunk
+      requestBody:
+        description: JSON data for trunk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /call/list:
+    get:
+      tags:
+      - call
+      summary: list available calls
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /call/{callId}:
+    parameters:
+      - in: path
+        name: callId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the call
+    get:
+      tags:
+      - call
+      summary: get call
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+          
+  /log/list:
+    get:
+      tags:
+      - log
+      summary: list available logs
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /log/{logId}:
+    parameters:
+      - in: path
+        name: logId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the log
+    get:
+      tags:
+      - log
+      summary: get log
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+  /recording/list:
+    get:
+      tags:
+      - recording
+      summary: list available recordings
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /recording/{recordingId}:
+    parameters:
+      - in: path
+        name: recordingId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the recording
+    get:
+      tags:
+      - recording
+      summary: get recording
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    delete:
+      tags:
+      - recording
+      summary: delete a recording
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /recording/tag/:
+    post:
+      tags:
+      - recording
+      summary: create recording tag
+      requestBody:
+        description: JSON data for tag
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /recording/tag/{tagName}:
+    parameters:
+      - in: path
+        name: tagName  
+        schema:
+          type: string
+        required: true
+        description: name of the tag
+    delete:
+      tags:
+      - recording
+      summary: remove recording tag
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /phone/list:
+    get:
+      tags:
+      - phone
+      summary: list available phones
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /phone/phoneDefs:
+    get:
+      tags:
+      - phone
+      summary: get phone definition data
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /phone/{phoneId}:
+    parameters:
+      - in: path
+        name: phoneId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the phone
+    get:
+      tags:
+      - phone
+      summary: get phone
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - phone
+      summary: create a new phone
+      requestBody:
+        description: JSON data for phone
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - phone
+      summary: delete a phone
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /phone/:
+    post:
+      tags:
+      - phone
+      summary: create a new phone
+      requestBody:
+        description: JSON data for phone
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /phoneGroup/list:
+    get:
+      tags:
+      - phoneGroup
+      summary: list available phoneGroups
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /phoneGroup/{phoneGroupId}:
+    parameters:
+      - in: path
+        name: phoneGroupId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the phoneGroup
+    get:
+      tags:
+      - phoneGroup
+      summary: get phoneGroup
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - phoneGroup
+      summary: create a new phoneGroup
+      requestBody:
+        description: JSON data for phoneGroup
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - phoneGroup
+      summary: delete a phoneGroup
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'      
+  /phoneGroup/:
+    post:
+      tags:
+      - phoneGroup
+      summary: create a new phoneGroup
+      requestBody:
+        description: JSON data for phoneGroup
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /phoneGlobalSetting/list:
+    get:
+      tags:
+      - phoneGlobalSetting
+      summary: list available phoneGlobalSettings
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /phoneGlobalSetting/{phoneGlobalSettingId}:
+    parameters:
+      - in: path
+        name: phoneGlobalSettingId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the phone global setting
+    get:
+      tags:
+      - phoneGlobalSetting
+      summary: get phoneGlobalSetting
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - phoneGlobalSetting
+      summary: create a new phoneGlobalSetting
+      requestBody:
+        description: JSON data for phoneGlobalSetting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - phoneGlobalSetting
+      summary: delete a phoneGlobalSetting
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /phoneGlobalSetting/:
+    post:
+      tags:
+      - phoneGlobalSetting
+      summary: create a new phoneGlobalSetting
+      requestBody:
+        description: JSON data for phoneGlobalSetting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /phoneIndividualSetting/list:
+    get:
+      tags:
+      - phoneIndividualSetting
+      summary: list available phoneIndividualSettings
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /phoneIndividualSetting/{phoneIndividualSettingId}:
+    parameters:
+      - in: path
+        name: phoneIndividualSettingId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the phone individual setting
+    get:
+      tags:
+      - phoneIndividualSetting
+      summary: get phoneIndividualSetting
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+      - phoneIndividualSetting
+      summary: create a new phoneIndividualSetting
+      requestBody:
+        description: JSON data for phoneIndividualSetting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+    delete:
+      tags:
+      - phoneIndividualSetting
+      summary: delete a phoneIndividualSetting
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /phoneIndividualSetting/:
+    post:
+      tags:
+      - phoneIndividualSetting
+      summary: create a new phoneIndividualSetting
+      requestBody:
+        description: JSON data for phoneIndividualSetting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /file/list:
+    get:
+      tags:
+      - file
+      summary: list available files
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /file/{fileId}:
+    parameters:
+      - in: path
+        name: fileId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the file
+    delete:
+      tags:
+      - file
+      summary: delete a file
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /file/upload:
+    post:
+      tags:
+      - file
+      summary: create a new file
+      requestBody:
+        description: JSON data for file
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /file/uploadFromGoogleDrive:
+    post:
+      tags:
+      - file
+      summary: create a new file
+      requestBody:
+        description: JSON data for file
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /file/uploadFromThirdParty:
+    post:
+      tags:
+      - file
+      summary: create a new file
+      requestBody:
+        description: JSON data for file
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /fax/list:
+    get:
+      tags:
+      - fax
+      summary: list available faxs
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /fax/{faxId}:
+    parameters:
+      - in: path
+        name: faxId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the fax
+    get:
+      tags:
+      - fax
+      summary: get fax
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    delete:
+      tags:
+      - fax
+      summary: delete a fax
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /credit/list:
+    get:
+      tags:
+      - credit
+      summary: list available credits
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /credit/checkoutWithPayPal:
+    get:
+      tags:
+      - credit
+      summary: delete a credit
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /credit/checkoutWithPayPalDone:
+    get:
+      tags:
+      - credit
+      summary: delete a credit
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /credit/checkoutWithPayPalFail:
+    get:
+      tags:
+      - credit
+      summary: delete a credit
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /credit/:
+    post:
+      tags:
+      - credit
+      summary: create a new credit
+      requestBody:
+        description: JSON data for credit
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /card/list:
+    get:
+      tags:
+      - card
+      summary: list available cards
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /card/{cardId}:
+    parameters:
+      - in: path
+        name: cardId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the card
+    delete:
+      tags:
+      - card
+      summary: delete a card
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /card/:
+    post:
+      tags:
+      - card
+      summary: create a new card
+      requestBody:
+        description: JSON data for card
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /card/{cardId}/setPrimary:
+    parameters:
+      - in: path
+        name: cardId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the card
+    post:
+      tags:
+      - card
+      summary: create a new card
+      requestBody:
+        description: JSON data for card
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /workspaceUser/list:
+    get:
+      tags:
+      - workspaceUser
+      summary: list available workspaceUsers
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /workspaceUser/{userId}:
+    parameters:
+      - in: path
+        name: userId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the user
+    delete:
+      tags:
+      - workspaceUser
+      summary: delete a workspaceUser
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /workspaceUser/:
+    post:
+      tags:
+      - workspaceUser
+      summary: create a new workspaceUser
+      requestBody:
+        description: JSON data for workspaceUser
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /workspaceUser/{userId}/resendInvite:
+    parameters:
+      - in: path
+        name: userId  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the user
+    post:
+      tags:
+      - workspaceUser
+      summary: resend invitation for workspace
+      requestBody:
+        description: JSON data for workspaceUser
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /workspaceParams/list:
+    get:
+      tags:
+      - workspaceParams
+      summary: list available workspaceParamss
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+
+  /workspaceParams/saveParams:
+    post:
+      tags:
+      - workspaceParams
+      summary: create a new workspaceParams
+      requestBody:
+        description: JSON data for workspaceParams
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /workspaceRoutingACL/list:
+    get:
+      tags:
+      - workspaceRoutingACL
+      summary: list available workspaceRoutingACLs
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /workspaceRoutingACL/saveParams:
+    post:
+      tags:
+      - workspaceRoutingACL
+      summary: create a new workspaceRoutingACL
+      requestBody:
+        description: JSON data for workspaceRoutingACL
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /setting/verifiedCallerIDs/list:
+    get:
+      tags:
+      - settings
+      summary: list caller ids
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /setting/verifiedCallerIDs/{verifiedCallerID}:
+    parameters:
+      - in: path
+        name: verifiedCallerID  
+        schema:
+          type: integer
+        required: true
+        description: Numeric Id of the verified caller
+    delete:
+      tags:
+      - settings
+      summary: delete a setting
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /setting/verifiedCallerID:
+    post:
+      tags:
+      - settings
+      summary: create a new setting
+      requestBody:
+        description: JSON data for setting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /setting/verifiedCallerID/confirm:
+    post:
+      tags:
+      - settings
+      summary: create a new setting
+      requestBody:
+        description: JSON data for setting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /setting/blockedNumbers/list:
+    get:
+      tags:
+      - settings
+      summary: list caller ids
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /setting/blockedNumbers/{blockedNumberId}:
+    parameters:
+    - in: path
+      name: blockedNumberId  
+      schema:
+        type: integer
+      required: true
+      description: Numeric Id of the blocked number
+    delete:
+      tags:
+      - settings
+      summary: delete a setting
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /setting/blockedNumber:
+    post:
+      tags:
+      - settings
+      summary: create a new setting
+      requestBody:
+        description: JSON data for setting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /setting/ipWhitelist/list:
+    get:
+      tags:
+      - settings
+      summary: list caller ids
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /setting/ipWhitelist/{ipWhitelistId}:
+    parameters:
+    - in: path
+      name: ipWhitelistId  
+      schema:
+        type: integer
+      required: true
+      description: Numeric Id of the whitelisted ip
+    delete:
+      tags:
+      - settings
+      summary: delete a setting
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+      
+  /setting/ipWhitelist:
+    post:
+      tags:
+      - settings
+      summary: create a new setting
+      requestBody:
+        description: JSON data for setting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+  /setting/extensionCode/list:
+    get:
+      tags:
+      - settings
+      summary: list caller ids
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemList'
+  /setting/extensionCode:
+    post:
+      tags:
+      - settings
+      summary: create a new setting
+      requestBody:
+        description: JSON data for setting
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemData'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiNoContentResponse'
+components:
+  schemas:
+    ApiNoContentResponse:
+      type: string
+    ItemData:
+        type: object
+        required: 
+          - name
+          - description
+          - json
+        properties:
+          name:
+            type: string
+          description:
+            type: string
+          json:
+            description: JSON data
+            type: object
+            required:
+              - cells
+            properties:
+              cells:
+                type: array 
+                items:
+                  type: object
+    ItemList:
+        type: array
+        items:
+          $ref: '#/components/schemas/Item'
+    Item:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+          description:
+            type: string
+          json:
+            type: string                  
+  securitySchemes:
+    bearerAuth:      
+      type: http      
+      scheme: bearer      
+      bearerFormat: JWT 
